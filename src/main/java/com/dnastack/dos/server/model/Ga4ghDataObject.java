@@ -1,0 +1,56 @@
+package com.dnastack.dos.server.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+
+import lombok.*;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Ga4ghDataObject {
+    
+	@Id
+	@NonNull
+	private String id;
+    private String name;
+    @NotNull
+    private String size;
+    
+    //@NotNull
+    //private DateTime created;
+    //private DateTime updated;
+    @NotNull
+    private String created;
+    private String updated;		// Is it a mistake that this isn't required...ask about this
+    
+    private String version;		// Same with
+    private String mimeType;	// These
+    
+    @Singular
+    @ElementCollection
+    @Embedded
+    @NotNull
+    private List<Checksum> checksums;
+    
+    @Singular
+    @ElementCollection
+    @Embedded
+    private List<URL> urls;
+    private String description;
+    
+    @Singular
+    @ElementCollection
+    private List<String> aliases;
+
+    public Ga4ghDataObject id(String id) {
+        this.id = id;
+        return this;
+    }
+}
