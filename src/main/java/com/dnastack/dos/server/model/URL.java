@@ -1,8 +1,7 @@
 package com.dnastack.dos.server.model;
 
 import javax.persistence.Embeddable;
-
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Embeddable
 public class URL {
-	@NonNull
+	@NotNull
     private String url = null;
     //private SystemMetadata systemMetadata = null;
     //private UserMetadata userMetadata = null;

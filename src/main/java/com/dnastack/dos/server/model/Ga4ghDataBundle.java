@@ -1,7 +1,5 @@
 package com.dnastack.dos.server.model;
 
-import java.util.List;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -13,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
+
+import java.util.List;
 
 @Data
 @Builder

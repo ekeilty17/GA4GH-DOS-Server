@@ -2,11 +2,16 @@ package com.dnastack.dos.server.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.validation.constraints.NotNull;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Singular;
+
 import java.util.List;
 
 @Data
@@ -17,7 +22,7 @@ import java.util.List;
 public class Ga4ghDataObject {
     
 	@Id
-	@NonNull
+	@NotNull
 	private String id;
     private String name;
     @NotNull
