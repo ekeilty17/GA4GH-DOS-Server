@@ -1,5 +1,8 @@
 package com.dnastack.dos.server.request;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import com.dnastack.dos.server.model.Ga4ghDataObject;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DataObject {
 	
+	@Valid	//needed for custom validation since it's a nested json object
+	@NotNull
 	private Ga4ghDataObject data_object;
 	
 }

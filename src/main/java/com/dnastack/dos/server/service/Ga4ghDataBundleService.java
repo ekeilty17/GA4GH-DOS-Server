@@ -1,5 +1,6 @@
 package com.dnastack.dos.server.service;
 
+import com.dnastack.dos.server.exception.EntityNotFoundException;
 import com.dnastack.dos.server.model.Ga4ghDataBundle;
 import com.dnastack.dos.server.repository.Ga4ghDataBundleRepository;
 
@@ -22,8 +23,12 @@ public class Ga4ghDataBundleService {
 		return objects;
 	}
 	
-	public Optional<Ga4ghDataBundle> getObject(String id) {
-		return ga4ghDataBundleRepository.findById(id);
+	public Ga4ghDataBundle getObject(String id) throws EntityNotFoundException {
+		Optional<Ga4ghDataBundle> ga4gh = ga4ghDataBundleRepository.findById(id);
+		if (ga4gh == null) {
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
+		}
+		return ga4gh.get();
 	}
 	
 	public void addObject(Ga4ghDataBundle object) {

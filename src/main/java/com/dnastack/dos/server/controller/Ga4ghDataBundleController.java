@@ -1,8 +1,10 @@
 package com.dnastack.dos.server.controller;
 
+import com.dnastack.dos.server.exception.EntityNotFoundException;
 import com.dnastack.dos.server.model.Ga4ghDataBundle;
 import com.dnastack.dos.server.request.DataBundle;
 import com.dnastack.dos.server.request.DataBundles;
+import com.dnastack.dos.server.request.ListRequest;
 import com.dnastack.dos.server.service.Ga4ghDataBundleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 
 @RestController
 public class Ga4ghDataBundleController {
@@ -27,8 +31,8 @@ public class Ga4ghDataBundleController {
 	@RequestMapping(
 			value = "/databundles",
 			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE)	//check that it only consumes a json object
-	public String addObject(@RequestBody DataBundle object) {
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String addObject(@RequestBody @Valid DataBundle object) {
 		ga4ghDataBundleService.addObject(object.getData_bundle());
 		return "{\"data_bundle_id\":\"" + object.getData_bundle().getId() + "\"}";
 	}
@@ -39,18 +43,16 @@ public class Ga4ghDataBundleController {
 			value = "/databundles/list",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public DataBundles getObjectList(@RequestBody DataBundle object) {
-		DataBundles o = new DataBundles(ga4ghDataBundleService.getAllObjects());
-		return o;
+	public DataBundles getObjectList(@RequestBody @Valid ListRequest object) {
+		// Need to add search based on variables in object
+		return new DataBundles(ga4ghDataBundleService.getAllObjects());
 	}
 	
 
 	// GET Request - returns data bundle by data_bundle_id
 	@RequestMapping("/databundles/{data_bundle_id}")
-	public DataBundle getPostedObject(@PathVariable String data_bundle_id) {
-		Optional<Ga4ghDataBundle> ga4gh = ga4ghDataBundleService.getObject(data_bundle_id);
-		DataBundle o = new DataBundle(ga4gh.get());
-		return o;
+	public DataBundle getPostedObject(@PathVariable String data_bundle_id) throws EntityNotFoundException {
+		return new DataBundle(ga4ghDataBundleService.getObject(data_bundle_id));
 	}
 	
 	// PUT Request - updates data bundle by data_bundle_id

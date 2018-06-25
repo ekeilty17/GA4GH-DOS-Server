@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -42,11 +43,13 @@ public class Ga4ghDataObject {
     @ElementCollection
     @Embedded
     @NotNull
+    @Valid
     private List<Checksum> checksums;
     
     @Singular
     @ElementCollection
     @Embedded
+    @Valid
     private List<URL> urls;
     private String description;
     
