@@ -1,8 +1,8 @@
 package com.dnastack.dos.server.request;
 
-import javax.validation.constraints.Min;
-
 import com.dnastack.dos.server.model.Checksum;
+
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 

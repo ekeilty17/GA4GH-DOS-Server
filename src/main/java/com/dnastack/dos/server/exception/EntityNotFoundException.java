@@ -1,10 +1,10 @@
 package com.dnastack.dos.server.exception;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class EntityNotFoundException extends Exception {
 

@@ -1,27 +1,27 @@
-package com.dnastack.dos.server.exception;
+package com.dnastack.dos.server.response;
 
 import lombok.Data;
 
 @Data
 //@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
 //@JsonTypeIdResolver(LowerCaseClassNameResolver.class)
-class ApiError {
+public class ErrorResponse {
 
     private String msg;
 	private int status;
 
-    ApiError(int status) {
+    public ErrorResponse(int status) {
         this();
         this.status = status;
     }
     
-    ApiError(int status, Throwable ex) {
+    public ErrorResponse(int status, Throwable ex) {
         this();
         this.status = status;
         this.msg = "An unexpected error occurred.";
     }
 
-    ApiError(String msg, int status, Throwable ex) {
+    public ErrorResponse(String msg, int status, Throwable ex) {
         this();
         this.status = status;
         this.msg = msg;

@@ -32,10 +32,14 @@ public class Ga4ghDataBundleService {
 	}
 	
 	public void addObject(Ga4ghDataBundle object) {
+		// Since the @Id annotation is next to the id variable in the Ga4ghDataBundle object
+		// .save() automatically adds by Id
 		ga4ghDataBundleRepository.save(object);
 	}
 	
 	public void updateObject(Ga4ghDataBundle object) {
+		// Since the @Id annotation is next to the id variable in the Ga4ghDataBundle object
+		// .save() automatically updates by Id
 		ga4ghDataBundleRepository.save(object);
 	}
 	

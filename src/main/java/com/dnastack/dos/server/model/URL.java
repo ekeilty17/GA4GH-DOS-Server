@@ -12,6 +12,7 @@ import lombok.Setter;
 public class URL {
 	@NotNull
     private String url = null;
+	// FIXME make system_metadata and user_metadata work
     //private SystemMetadata systemMetadata = null;
     //private UserMetadata userMetadata = null;
 

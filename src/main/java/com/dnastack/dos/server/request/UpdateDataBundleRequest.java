@@ -10,10 +10,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateDataBundleRequest {
+public class UpdateDataBundleRequest {
 	
-	@Valid
 	@NotNull
-	private Ga4ghDataBundle data_bundle;
+	private String data_bundle_id;
+	@NotNull
+	@Valid
+	private Ga4ghDataBundle ga4ghDataBundle;
 	
 }

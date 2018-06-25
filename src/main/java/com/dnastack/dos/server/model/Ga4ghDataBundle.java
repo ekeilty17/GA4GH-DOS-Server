@@ -35,6 +35,7 @@ public class Ga4ghDataBundle {
 	//private DateTime created;
 	//@NotNull
     //private DateTime updated;
+	// 	TODO Make these DataTime objects rather than String variabels
 	@NotNull
 	private String created;
 	@NotNull
@@ -56,12 +57,13 @@ public class Ga4ghDataBundle {
     @ElementCollection
     private List<String> aliases;
     
+	// FIXME make system_metadata and user_metadata work
 	//@NotNull
     //system_metadata
     //@NotNull
     //user_metedata
 	
-	/**
+	/*
 	 * @Entity and @Id covert the class variables into columns in the SQL database
 	 * @NotNull means it's a required field
 	 * @Singular is part of lombok, works with the @Builder (part of @Data) and is needed to add data to the list in our class definition

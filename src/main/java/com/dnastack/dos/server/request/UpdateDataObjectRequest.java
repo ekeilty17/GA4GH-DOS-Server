@@ -10,10 +10,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateDataObjectRequest {
+public class UpdateDataObjectRequest {
 	
-	@Valid	//needed for custom validation since it's a nested json object
 	@NotNull
-	private Ga4ghDataObject data_object;
+	private String data_object_id;
+	@NotNull
+	@Valid
+	private Ga4ghDataObject ga4ghDataObject;
 	
 }

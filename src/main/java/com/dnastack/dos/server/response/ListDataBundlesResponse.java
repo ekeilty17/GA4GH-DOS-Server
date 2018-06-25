@@ -1,4 +1,4 @@
-package com.dnastack.dos.server.request;
+package com.dnastack.dos.server.response;
 
 import com.dnastack.dos.server.model.Ga4ghDataBundle;
 
@@ -11,10 +11,27 @@ import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class DataBundles {
+public class ListDataBundlesResponse {
 	
 	private List<Ga4ghDataBundle> data_bundles;
+	private String next_page_token;
+	
+	public ListDataBundlesResponse() {
+		
+	}
+	
+	public ListDataBundlesResponse(List<Ga4ghDataBundle> data_bundles) {
+		super();
+		this.data_bundles = data_bundles;
+		this.next_page_token = "idk";
+	}
+	
+	public ListDataBundlesResponse(List<Ga4ghDataBundle> data_bundles, String next_page_token) {
+		super();
+		this.data_bundles = data_bundles;
+		this.next_page_token = next_page_token;
+	}
+	
+	
 	
 }
