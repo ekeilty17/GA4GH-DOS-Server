@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_example?useSSL=false
+    username: dos
+    password: dos
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: create
+
+security:
+  oauth2:
+    client:
+      clientId: "c3ByaW5nLWJvb3QtZGVtb3M="
+      clientSecret: "N2FiNTRjYjMtMTM1Ni00YTY4LTgzZDctYzNjZTliOWVlMmZm"
+      accessTokenUri: http://keycloakHost:keycloakPort/auth/realms/{relam}/protocol/openid-connect/token
+      userAuthorizationUri: http://keycloakHost:keycloakPort/auth/realms/{relam}/protocol/openid-connect/auth
+      tokenName: access_token
+      authenticationScheme: header
+      clientAuthenticationScheme: header
+#    resource:
+#      userInfoUri: https://graph.facebook.com/me
+
+logging:
+  level: 
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE

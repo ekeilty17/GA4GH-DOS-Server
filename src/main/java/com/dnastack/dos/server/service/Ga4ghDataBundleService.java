@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Ga4ghDataBundleService {
@@ -24,11 +23,11 @@ public class Ga4ghDataBundleService {
 	}
 	
 	public Ga4ghDataBundle getObject(String id) throws EntityNotFoundException {
-		Optional<Ga4ghDataBundle> ga4gh = ga4ghDataBundleRepository.findById(id);
+		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(id);
 		if (ga4gh == null) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
 		}
-		return ga4gh.get();
+		return ga4gh;
 	}
 	
 	public void addObject(Ga4ghDataBundle object) {
@@ -44,6 +43,6 @@ public class Ga4ghDataBundleService {
 	}
 	
 	public void deleteObject(String id) {
-		ga4ghDataBundleRepository.deleteById(id);
+		ga4ghDataBundleRepository.delete(id);
 	}
 }
