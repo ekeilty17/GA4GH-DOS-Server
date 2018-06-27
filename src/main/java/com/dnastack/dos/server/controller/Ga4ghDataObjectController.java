@@ -28,7 +28,13 @@ public class Ga4ghDataObjectController {
 	
 	@Autowired
 	private Ga4ghDataObjectService ga4ghDataObjectService;
+
 	
+	// GET Request - temporary
+	@RequestMapping("/dataobjects/test")
+	public String Test() {
+		return "If you are seeing this, then you have been authenticated.";
+	}
 	
 	// POST Request - add data object
 	@RequestMapping(

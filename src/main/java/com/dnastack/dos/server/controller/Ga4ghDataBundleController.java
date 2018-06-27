@@ -27,7 +27,13 @@ public class Ga4ghDataBundleController {
 	
 	@Autowired
 	private Ga4ghDataBundleService ga4ghDataBundleService;
-
+	
+	// GET Request - temporary
+	@RequestMapping("/databundles/test")
+	public String Test() {
+		return "If you are seeing this, then you have been authenticated.";
+	}
+	
 	// POST Request - add a data bundle
 	@RequestMapping(
 			value = "/databundles",

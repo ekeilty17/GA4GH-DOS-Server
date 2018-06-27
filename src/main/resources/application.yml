@@ -7,25 +7,31 @@ spring:
     username: dos
     password: dos
   jpa:
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        ddl-auto: create
 
-security:
-  oauth2:
-    client:
-      clientId: "c3ByaW5nLWJvb3QtZGVtb3M="
-      clientSecret: "N2FiNTRjYjMtMTM1Ni00YTY4LTgzZDctYzNjZTliOWVlMmZm"
-      accessTokenUri: http://keycloakHost:keycloakPort/auth/realms/{relam}/protocol/openid-connect/token
-      userAuthorizationUri: http://keycloakHost:keycloakPort/auth/realms/{relam}/protocol/openid-connect/auth
-      tokenName: access_token
-      authenticationScheme: header
-      clientAuthenticationScheme: header
-#    resource:
-#      userInfoUri: https://graph.facebook.com/me
+keycloak:
+  principal-attribute: ekeilty
+  auth-server-url: http://localhost:8081/auth
+  realm: dos-server
+  resource: dos-server-app
+  public-client: true
+  
+  security-constraints:
+    - authRoles:
+      - user
+      securityCollections:
+      - patterns:
+        - /databundles/*
+        - /dataobjects/*
+
 
 logging:
-  level: 
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type: TRACE
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
