@@ -35,7 +35,7 @@ public class Ga4ghDataBundle {
 	//private DateTime created;
 	//@NotNull
     //private DateTime updated;
-	// 	TODO Make these DataTime objects rather than String variabels
+	// 	TODO Make these DataTime objects rather than String variables
 	@NotNull
 	private String created;
 	@NotNull

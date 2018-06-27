@@ -20,13 +20,13 @@ keycloak:
   resource: dos-server-app
   public-client: true
   
-  security-constraints:
-    - authRoles:
-      - user
-      securityCollections:
-      - patterns:
-        - /databundles/*
-        - /dataobjects/*
+  #security-constraints:
+  #  - authRoles:
+  #    - user
+  #    securityCollections:
+  #    - patterns:
+  #      - /databundles/*
+  #      - /dataobjects/*
 
 
 logging:
