@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
+	/*
+	 * GET Request Parameter Exception handling
+	 */
+	
+	@Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse("required parameter '" + ex.getParameterName() + "' is missing", HttpStatus.BAD_REQUEST.value(), ex);
+        return buildResponseEntity(errorResponse);
+    }
+	
+	
+	/*
+	 * POST Request Body Exception Handling
+	 */
+	
 	// If the request is not a valid JSON object
 	// I don't think Springboot has a dedicated Exception for this
     @Override
@@ -37,7 +53,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("Malformed JSON request.", HttpStatus.BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
-	
+    
     // Validation Error: when @Valid fails. Specifically if
     //		any NonNull-able fields are null (possibly they are miss spelled)
     @Override
@@ -45,7 +61,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
-
+    
     // org.joda.time.IllegalFieldValueException:
     //		created/updated field is not to RFC3339 specification
     @ExceptionHandler({org.joda.time.IllegalFieldValueException.class, java.lang.IllegalArgumentException.class})
@@ -61,6 +77,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
     	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), NOT_FOUND.value(), ex);
         return buildResponseEntity(errorResponse);
+    }
+    
+    // Exception: handles any unexpected exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> exception(Exception ex) {
+    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), INTERNAL_SERVER_ERROR.value(), ex);
+    	return buildResponseEntity(errorResponse);
     }
     
     private ResponseEntity<Object> buildResponseEntity(ErrorResponse errorResponse) {

@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -37,7 +38,7 @@ public class Ga4ghDataBundleController {
 	}
 	
 	// POST Request - add a data bundle
-	// TODO Ask what happens if a data bundle with that id already exists...should or shouldn't treat like PUT?
+	// TODO Ask what happens if a data bundle with that id already exists...should or shouldn't it override it?
 	@RequestMapping(
 			value = "/databundles",
 			method = RequestMethod.POST,
@@ -54,15 +55,22 @@ public class Ga4ghDataBundleController {
 	// GET Request - gets all data bundles
 	// TODO Need to add search based on variables in object
 	@RequestMapping("/databundles")
-	public ListDataBundlesResponse getDataBundlesList() {
+	public ListDataBundlesResponse getDataBundlesList(
+			@RequestParam(value = "alias", required = false) String alias,
+			@RequestParam(value = "checksum", required = true) String checksum,
+			@RequestParam(value = "checksum_type", required = false) String checksum_type,
+			@RequestParam(value = "page_size", required = false) Integer page_size,
+			@RequestParam(value = "page_token", required = false) String page_token) {
 		return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjects());
 	}
 	
 
 	// GET Request - returns data bundle by data_bundle_id
+	// TODO add version functionality
 	@RequestMapping("/databundles/{data_bundle_id}")
-	public GetDataBundleResponse getDataBundleById(@PathVariable String data_bundle_id) throws EntityNotFoundException {
-		// FIXME EntityNotFound Exception does not work
+	public GetDataBundleResponse getDataBundleById(
+			@PathVariable String data_bundle_id,
+			@RequestParam(value = "version", required = false) String version) throws EntityNotFoundException {
 		return new GetDataBundleResponse(ga4ghDataBundleService.getObject(data_bundle_id));
 	}
 	
@@ -101,4 +109,5 @@ public class Ga4ghDataBundleController {
 		// If I were to POST a version 2 of a databundle, what should I have done with the version 1
 		// would version 1 and version 2 share the same data_bundle_ids?
 	}
+	
 }

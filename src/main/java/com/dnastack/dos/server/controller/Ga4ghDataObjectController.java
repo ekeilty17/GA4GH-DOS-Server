@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -52,14 +53,21 @@ public class Ga4ghDataObjectController {
 
 	// GET Request - gets all data objects
 	@RequestMapping("/dataobjects")
-	public ListDataObjectsResponse getDataObjectsList() {
+	public ListDataObjectsResponse getDataObjectsList(
+			@RequestParam(value = "alias", required = false) String alias,
+			@RequestParam(value = "checksum", required = true) String checksum,
+			@RequestParam(value = "checksum_type", required = false) String checksum_type,
+			@RequestParam(value = "page_size", required = false) Integer page_size,
+			@RequestParam(value = "page_token", required = false) String page_token) {
 		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjects());
 	}
 	
 	
 	// GET Request - returns specific data object by id
 	@RequestMapping("/dataobjects/{data_object_id}")
-	public GetDataObjectResponse getDataObjectById(@PathVariable String data_object_id) throws EntityNotFoundException {
+	public GetDataObjectResponse getDataObjectById(
+			@PathVariable String data_object_id,
+			@RequestParam(value = "version", required = false) String version) throws EntityNotFoundException {
 		return new GetDataObjectResponse(ga4ghDataObjectService.getObject(data_object_id));
 	}
 	
@@ -81,7 +89,7 @@ public class Ga4ghDataObjectController {
 	@RequestMapping(
 			value = "/dataobjects/{data_object_id}",
 			method = RequestMethod.DELETE)
-	public DeleteDataObjectResponse deleteDataObjectById(@PathVariable String data_object_id) {
+	public DeleteDataObjectResponse deleteDataObjectById(@PathVariable String data_object_id) throws EntityNotFoundException {
 		ga4ghDataObjectService.deleteObject(data_object_id);
 		return new DeleteDataObjectResponse(data_object_id);
 	}
@@ -92,29 +100,4 @@ public class Ga4ghDataObjectController {
 	public void getDataObjectVersions(@PathVariable String data_object_id) {
 	}
 	
-	
-	
-	// Handling requests to pages that DNE
-	@RequestMapping("/**")
-	public String getEndpointDNE() {
-		return "This page does not exist.";
-	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.POST)
-	public String postEndpointDNE() {
-		return "This page does not exist.";
-	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.PUT)
-	public String putEndpointDNE() {
-		return "This page does not exist.";
-	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.DELETE)
-	public String deleteEndpointDNE() {
-		return "This page does not exist.";
-	}
 }

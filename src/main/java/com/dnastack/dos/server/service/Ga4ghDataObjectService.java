@@ -43,7 +43,11 @@ public class Ga4ghDataObjectService {
 		ga4ghDataObjectRepository.save(object);
 	}
 	
-	public void deleteObject(String id) {
+	public void deleteObject(String id) throws EntityNotFoundException {
+		Ga4ghDataObject ga4gh = ga4ghDataObjectRepository.findOne(id);
+		if (ga4gh == null) {
+			throw new EntityNotFoundException(Ga4ghDataObject.class, "id", id);
+		}
 		ga4ghDataObjectRepository.delete(id);
 	}
 	
