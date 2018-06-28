@@ -4,7 +4,11 @@ A work in progress. API modeled according to the swagger specification provided 
 
 ## To Run
 
-`mvn clean spring-boot:run`
+```
+
+mvn clean spring-boot:run
+
+```
 
 
 ## Dependency Checklist
