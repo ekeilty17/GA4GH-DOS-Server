@@ -9,9 +9,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -27,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	// If the request is not a valid JSON object
+	// I don't think Springboot has a dedicated Exception for this
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ServletWebRequest servletWebRequest = (ServletWebRequest) request;
@@ -34,25 +37,29 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("Malformed JSON request.", HttpStatus.BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
-    
+	
     // Validation Error: when @Valid fails. Specifically if
-    //		id = NULL
-    //		any of the fields are misspelled
+    //		any NonNull-able fields are null (possibly they are miss spelled)
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatus status,
-            WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse("The request is malformed (@Valid).", BAD_REQUEST.value(), ex);
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), BAD_REQUEST.value(), ex);
+        return buildResponseEntity(errorResponse);
+    }
+
+    // org.joda.time.IllegalFieldValueException:
+    //		created/updated field is not to RFC3339 specification
+    @ExceptionHandler({org.joda.time.IllegalFieldValueException.class, java.lang.IllegalArgumentException.class})
+    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
     
-    // org.joda.time.IllegalFieldValueException:
-    //		created/updated field is not to RFC3339 specification
-    @ExceptionHandler(org.joda.time.IllegalFieldValueException.class)
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-    	ErrorResponse errorResponse = new ErrorResponse("This request is malformed (DateTime).", BAD_REQUEST.value(), ex);
+    // com.dnastack.dos.server.exception.EntityNotFoundException:
+    //		My custom implementation
+    //		If getDataObject or getDataBundle return null;
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
+    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), NOT_FOUND.value(), ex);
         return buildResponseEntity(errorResponse);
     }
     

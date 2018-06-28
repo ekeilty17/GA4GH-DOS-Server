@@ -2,7 +2,6 @@ package com.dnastack.dos.server.controller;
 
 import com.dnastack.dos.server.exception.EntityNotFoundException;
 import com.dnastack.dos.server.request.CreateDataBundleRequest;
-import com.dnastack.dos.server.request.ListRequest;
 import com.dnastack.dos.server.request.UpdateDataBundleRequest;
 import com.dnastack.dos.server.response.CreateDataBundleResponse;
 import com.dnastack.dos.server.response.DeleteDataBundleResponse;
@@ -52,14 +51,10 @@ public class Ga4ghDataBundleController {
 		return new CreateDataBundleResponse(object.getData_bundle().getId());
 	}
 	
-	// POST Request - FIXME returns a list of databundles based on search criteria specified in the payload?
-	// or does it just list all the data bundles?
-	@RequestMapping(
-			value = "/databundles/list",
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ListDataBundlesResponse getDataBundlesList(@RequestBody @Valid ListRequest object) {
-		// TODO Need to add search based on variables in object
+	// GET Request - gets all data bundles
+	// TODO Need to add search based on variables in object
+	@RequestMapping("/databundles")
+	public ListDataBundlesResponse getDataBundlesList() {
 		return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjects());
 	}
 	
@@ -67,6 +62,7 @@ public class Ga4ghDataBundleController {
 	// GET Request - returns data bundle by data_bundle_id
 	@RequestMapping("/databundles/{data_bundle_id}")
 	public GetDataBundleResponse getDataBundleById(@PathVariable String data_bundle_id) throws EntityNotFoundException {
+		// FIXME EntityNotFound Exception does not work
 		return new GetDataBundleResponse(ga4ghDataBundleService.getObject(data_bundle_id));
 	}
 	
@@ -75,7 +71,7 @@ public class Ga4ghDataBundleController {
 			value = "/databundles/{data_bundle_id}",
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UpdateDataBundleResponse updateDataBundleById(@RequestBody UpdateDataBundleRequest object, @PathVariable String data_bundle_id) {
+	public UpdateDataBundleResponse updateDataBundleById(@RequestBody @Valid UpdateDataBundleRequest object, @PathVariable String data_bundle_id) {
 		// TODO need to check that data_bundle_id == object.getData_bundle_id()
 		// FIXME what do I do with object.getData_bundle_id != object.getGa4ghDataBundle().getId() ?
 		// Handling DateTime Exception
@@ -91,7 +87,7 @@ public class Ga4ghDataBundleController {
 	@RequestMapping(
 			value = "/databundles/{data_bundle_id}",
 			method = RequestMethod.DELETE)
-	public DeleteDataBundleResponse deleteDataBundleById(@PathVariable String data_bundle_id) {
+	public DeleteDataBundleResponse deleteDataBundleById(@PathVariable String data_bundle_id) throws EntityNotFoundException {
 		ga4ghDataBundleService.deleteObject(data_bundle_id);
 		return new DeleteDataBundleResponse(data_bundle_id);
 	}

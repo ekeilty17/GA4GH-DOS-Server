@@ -2,7 +2,6 @@ package com.dnastack.dos.server.controller;
 
 import com.dnastack.dos.server.exception.EntityNotFoundException;
 import com.dnastack.dos.server.request.CreateDataObjectRequest;
-import com.dnastack.dos.server.request.ListRequest;
 import com.dnastack.dos.server.request.UpdateDataObjectRequest;
 import com.dnastack.dos.server.response.CreateDataObjectResponse;
 import com.dnastack.dos.server.response.DeleteDataObjectResponse;
@@ -51,12 +50,9 @@ public class Ga4ghDataObjectController {
 		return new CreateDataObjectResponse(object.getData_object().getId());
 	}
 
-	// POST Request
-	@RequestMapping(
-			value = "/dataobjects/list",
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ListDataObjectsResponse getDataObjectsList(@RequestBody @Valid ListRequest object) {
+	// GET Request - gets all data objects
+	@RequestMapping("/dataobjects")
+	public ListDataObjectsResponse getDataObjectsList() {
 		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjects());
 	}
 	
@@ -72,7 +68,7 @@ public class Ga4ghDataObjectController {
 			value = "/dataobjects/{data_object_id}",
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public UpdateDataObjectResponse updateDataObjectById(@RequestBody UpdateDataObjectRequest object, @PathVariable String data_object_id) {
+	public UpdateDataObjectResponse updateDataObjectById(@RequestBody @Valid UpdateDataObjectRequest object, @PathVariable String data_object_id) {
 		// Handling DateTime Exception
 		DateTime D1 = new DateTime(object.getGa4ghDataObject().getCreated());
 		DateTime D2 = new DateTime(object.getGa4ghDataObject().getUpdated());
@@ -96,4 +92,29 @@ public class Ga4ghDataObjectController {
 	public void getDataObjectVersions(@PathVariable String data_object_id) {
 	}
 	
+	
+	
+	// Handling requests to pages that DNE
+	@RequestMapping("/**")
+	public String getEndpointDNE() {
+		return "This page does not exist.";
+	}
+	@RequestMapping(
+			value = "/**",
+			method = RequestMethod.POST)
+	public String postEndpointDNE() {
+		return "This page does not exist.";
+	}
+	@RequestMapping(
+			value = "/**",
+			method = RequestMethod.PUT)
+	public String putEndpointDNE() {
+		return "This page does not exist.";
+	}
+	@RequestMapping(
+			value = "/**",
+			method = RequestMethod.DELETE)
+	public String deleteEndpointDNE() {
+		return "This page does not exist.";
+	}
 }

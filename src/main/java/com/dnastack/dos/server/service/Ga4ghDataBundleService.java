@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class Ga4ghDataBundleService {
-
+	
 	@Autowired
 	private Ga4ghDataBundleRepository ga4ghDataBundleRepository;
 	
@@ -44,7 +46,11 @@ public class Ga4ghDataBundleService {
 		ga4ghDataBundleRepository.save(object);
 	}
 	
-	public void deleteObject(String id) {
+	public void deleteObject(String id) throws EntityNotFoundException {
+		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(id);
+		if (ga4gh == null) {
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
+		}
 		ga4ghDataBundleRepository.delete(id);
 	}
 }
