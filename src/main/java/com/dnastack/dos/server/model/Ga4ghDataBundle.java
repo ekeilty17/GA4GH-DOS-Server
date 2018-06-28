@@ -1,9 +1,13 @@
 package com.dnastack.dos.server.model;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.JoinColumn;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +17,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -31,11 +37,6 @@ public class Ga4ghDataBundle {
 	@NotNull
 	private List<String> data_object_ids;
     
-	//@NotNull
-	//private DateTime created;
-	//@NotNull
-    //private DateTime updated;
-	// 	TODO Make these DataTime objects rather than String variables
 	@NotNull
 	private String created;
 	@NotNull
@@ -57,11 +58,18 @@ public class Ga4ghDataBundle {
     @ElementCollection
     private List<String> aliases;
     
-	// FIXME make system_metadata and user_metadata work
-	//@NotNull
-    //system_metadata
-    //@NotNull
-    //user_metedata
+	@ElementCollection
+    @MapKeyColumn(name="system_metadata_key")
+    @Column(name="system_metadata_value")
+    //@CollectionTable(name="example_attributes", joinColumns=@JoinColumn(name="example_id"))
+	@NotNull
+    private Map<String, String> system_metadata;
+	
+	@ElementCollection
+    @MapKeyColumn(name="user_metadata_key")
+    @Column(name="user_metadata_value")
+	@NotNull
+    private Map<String, String> user_metadata;
 	
 	/*
 	 * @Entity and @Id covert the class variables into columns in the SQL database

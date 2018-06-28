@@ -1,8 +1,6 @@
 package com.dnastack.dos.server.controller;
 
-import com.dnastack.dos.server.exception.DateTimeInvalidException;
 import com.dnastack.dos.server.exception.EntityNotFoundException;
-import com.dnastack.dos.server.exception.RestExceptionHandler;
 import com.dnastack.dos.server.request.CreateDataBundleRequest;
 import com.dnastack.dos.server.request.ListRequest;
 import com.dnastack.dos.server.request.UpdateDataBundleRequest;
@@ -15,20 +13,14 @@ import com.dnastack.dos.server.service.Ga4ghDataBundleService;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -46,11 +38,12 @@ public class Ga4ghDataBundleController {
 	}
 	
 	// POST Request - add a data bundle
+	// TODO Ask what happens if a data bundle with that id already exists...should or shouldn't treat like PUT?
 	@RequestMapping(
 			value = "/databundles",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CreateDataBundleResponse createDataBundle(@RequestBody @Valid CreateDataBundleRequest object) throws MethodArgumentTypeMismatchException {
+	public CreateDataBundleResponse createDataBundle(@RequestBody @Valid CreateDataBundleRequest object) {
 		// Handling DateTime Exception
 		DateTime D1 = new DateTime(object.getData_bundle().getCreated());
 		DateTime D2 = new DateTime(object.getData_bundle().getUpdated());
@@ -58,13 +51,6 @@ public class Ga4ghDataBundleController {
 		ga4ghDataBundleService.addObject(object.getData_bundle());
 		return new CreateDataBundleResponse(object.getData_bundle().getId());
 	}
-	
-	/*
-	@ExceptionHandler(DateTimeInvalidException.class)
-	public void handleException(DateTimeInvalidException e, HttpServletResponse response) throws IOException {
-	    response.sendError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-	}
-	*/
 	
 	// POST Request - FIXME returns a list of databundles based on search criteria specified in the payload?
 	// or does it just list all the data bundles?
@@ -92,11 +78,16 @@ public class Ga4ghDataBundleController {
 	public UpdateDataBundleResponse updateDataBundleById(@RequestBody UpdateDataBundleRequest object, @PathVariable String data_bundle_id) {
 		// TODO need to check that data_bundle_id == object.getData_bundle_id()
 		// FIXME what do I do with object.getData_bundle_id != object.getGa4ghDataBundle().getId() ?
+		// Handling DateTime Exception
+		DateTime D1 = new DateTime(object.getGa4ghDataBundle().getCreated());
+		DateTime D2 = new DateTime(object.getGa4ghDataBundle().getUpdated());
+				
 		ga4ghDataBundleService.updateObject(object.getGa4ghDataBundle());
 		return new UpdateDataBundleResponse(object.getData_bundle_id());
 	}
 	
 	// DELETE Request - deletes a data bundle by data_bundle_id
+	// TODO handle entity not found exception
 	@RequestMapping(
 			value = "/databundles/{data_bundle_id}",
 			method = RequestMethod.DELETE)

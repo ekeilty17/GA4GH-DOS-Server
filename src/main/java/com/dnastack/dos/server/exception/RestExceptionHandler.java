@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,21 +37,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     
     // Validation Error: when @Valid fails. Specifically if
     //		id = NULL
+    //		any of the fields are misspelled
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse("The request is malformed.", BAD_REQUEST.value(), ex);
+        ErrorResponse errorResponse = new ErrorResponse("The request is malformed (@Valid).", BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
     
     // org.joda.time.IllegalFieldValueException:
-    //		created/updated not to RFC3339 spec
+    //		created/updated field is not to RFC3339 specification
     @ExceptionHandler(org.joda.time.IllegalFieldValueException.class)
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-    	ErrorResponse errorResponse = new ErrorResponse("This request is malformed.", BAD_REQUEST.value(), ex);
+    	ErrorResponse errorResponse = new ErrorResponse("This request is malformed (DateTime).", BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
     

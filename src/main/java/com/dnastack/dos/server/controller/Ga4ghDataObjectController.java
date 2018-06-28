@@ -11,6 +11,7 @@ import com.dnastack.dos.server.response.ListDataObjectsResponse;
 import com.dnastack.dos.server.response.UpdateDataObjectResponse;
 import com.dnastack.dos.server.service.Ga4ghDataObjectService;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import javax.validation.Valid;
@@ -42,6 +43,10 @@ public class Ga4ghDataObjectController {
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public CreateDataObjectResponse createDataObject(@RequestBody @Valid CreateDataObjectRequest object) {
+		// Handling DateTime Exception
+		DateTime D1 = new DateTime(object.getData_object().getCreated());
+		DateTime D2 = new DateTime(object.getData_object().getUpdated());
+		
 		ga4ghDataObjectService.addObject(object.getData_object());
 		return new CreateDataObjectResponse(object.getData_object().getId());
 	}
@@ -68,6 +73,10 @@ public class Ga4ghDataObjectController {
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public UpdateDataObjectResponse updateDataObjectById(@RequestBody UpdateDataObjectRequest object, @PathVariable String data_object_id) {
+		// Handling DateTime Exception
+		DateTime D1 = new DateTime(object.getGa4ghDataObject().getCreated());
+		DateTime D2 = new DateTime(object.getGa4ghDataObject().getUpdated());
+		
 		ga4ghDataObjectService.updateObject(object.getGa4ghDataObject());
 		return new UpdateDataObjectResponse(object.getData_object_id());
 	}

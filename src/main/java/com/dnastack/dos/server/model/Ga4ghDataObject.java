@@ -1,7 +1,10 @@
 package com.dnastack.dos.server.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.validation.Valid;
@@ -20,18 +23,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+//(name = "ga4gh_data_object")
 public class Ga4ghDataObject {
     
 	@Id
 	@NotNull
+	//@Column(name = "ga4gh_data_object_id")
 	private String id;
     private String name;
     @NotNull
     private String size;
     
-    //@NotNull
-    //private DateTime created;
-    //private DateTime updated;
     @NotNull
     private String created;
     private String updated;		// Is it a mistake that this isn't required...ask about this
@@ -46,11 +48,10 @@ public class Ga4ghDataObject {
     @Valid
     private List<Checksum> checksums;
     
-    @Singular
-    @ElementCollection
-    @Embedded
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Valid
     private List<URL> urls;
+    
     private String description;
     
     @Singular

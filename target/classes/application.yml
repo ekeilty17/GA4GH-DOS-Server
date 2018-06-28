@@ -12,6 +12,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
 keycloak:
   principal-attribute: ekeilty
