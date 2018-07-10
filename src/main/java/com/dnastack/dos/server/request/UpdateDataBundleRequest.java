@@ -16,6 +16,6 @@ public class UpdateDataBundleRequest {
 	private String data_bundle_id;
 	@NotNull
 	@Valid
-	private Ga4ghDataBundle ga4ghDataBundle;
+	private Ga4ghDataBundle data_bundle;
 	
 }

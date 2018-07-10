@@ -13,8 +13,10 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -23,6 +25,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"checksums", "urls"})
+@EqualsAndHashCode(exclude = {"checksums", "urls"})
 //(name = "ga4gh_data_object")
 public class Ga4ghDataObject {
     
@@ -36,10 +40,11 @@ public class Ga4ghDataObject {
     
     @NotNull
     private String created;
-    private String updated;		// Is it a mistake that this isn't required...ask about this
+    @NotNull
+    private String updated;
     
-    private String version;		// Same with
-    private String mimeType;	// These
+    private String version;	
+    private String mimeType;
     
     @Singular
     @ElementCollection
@@ -48,7 +53,11 @@ public class Ga4ghDataObject {
     @Valid
     private List<Checksum> checksums;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // TODO look into if FetchType should be changed to LAZY
+    // @OneToMany(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
+    // TODO look into "join table for mapping collections if you want Cascade collection"
+    // FIXME urls must have a unique id, which means can't have duplicate urls
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Valid
     private List<URL> urls;
     

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class CreateDataObjectRequest {
 	
-	@Valid	//needed for custom validation since it's a nested json object
+	@Valid
 	@NotNull
 	private Ga4ghDataObject data_object;
 	

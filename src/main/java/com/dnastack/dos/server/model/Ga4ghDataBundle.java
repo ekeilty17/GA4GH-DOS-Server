@@ -1,23 +1,25 @@
 package com.dnastack.dos.server.model;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
-import javax.persistence.JoinColumn;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
+import lombok.ToString;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,13 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"checksums"})
+@EqualsAndHashCode(exclude = {"checksums"})
+@EntityListeners(AuditingEntityListener.class)
 public class Ga4ghDataBundle {
+	
+	// TODO look into "@JsonView" for dealing with different permissions per element in data
+	// TODO or us a DTO layer...probably better
 	
 	@Id
 	@NotNull
@@ -36,12 +44,14 @@ public class Ga4ghDataBundle {
 	@ElementCollection
 	@NotNull
 	private List<String> data_object_ids;
+	// TODO possibly change all lists to sets...not sure yet
     
 	@NotNull
 	private String created;
 	@NotNull
 	private String updated;
 	
+	// FIXME "always use OptimisticLock for avoid concurrent data changing"
 	@NotNull
 	private String version;
 	
@@ -70,6 +80,14 @@ public class Ga4ghDataBundle {
     @Column(name="user_metadata_value")
 	@NotNull
     private Map<String, String> user_metadata;
+	
+	/*
+	public Ga4ghDataBundle(Ga4ghDataBundle ga4ghDataBundle) {
+		this(ga4ghDataBundle.getId(), ga4ghDataBundle.getData_object_ids(), ga4ghDataBundle.getCreated(), 
+			 ga4ghDataBundle.getUpdated(), ga4ghDataBundle.getVersion(), ga4ghDataBundle.getChecksums(), ga4ghDataBundle.getDescription(), 
+			 ga4ghDataBundle.getAliases(), ga4ghDataBundle.getSystem_metadata(), ga4ghDataBundle.getUser_metadata());
+	}
+	*/
 	
 	/*
 	 * @Entity and @Id covert the class variables into columns in the SQL database

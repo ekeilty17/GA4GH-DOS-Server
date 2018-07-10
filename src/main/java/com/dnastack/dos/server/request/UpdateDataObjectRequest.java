@@ -14,8 +14,8 @@ public class UpdateDataObjectRequest {
 	
 	@NotNull
 	private String data_object_id;
-	@NotNull
 	@Valid
-	private Ga4ghDataObject ga4ghDataObject;
+	@NotNull
+	private Ga4ghDataObject data_object;
 	
 }
