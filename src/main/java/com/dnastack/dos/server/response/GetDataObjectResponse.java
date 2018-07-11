@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetDataObjectResponse {
-	
+
 	private DataObject data_object;
-	
+
 }

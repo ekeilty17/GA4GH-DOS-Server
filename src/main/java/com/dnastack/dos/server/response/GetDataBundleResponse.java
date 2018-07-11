@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetDataBundleResponse {
-	
+
 	private DataBundle data_bundle;
-	
+
 }

@@ -10,5 +10,5 @@ import lombok.Setter;
 public class UpdateDataObjectResponse {
 
 	private String data_object_id;
-	
+
 }

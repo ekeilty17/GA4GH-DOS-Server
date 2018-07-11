@@ -6,27 +6,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GenericController {
-	
+
 	// Handling requests to pages that DNE
 	@RequestMapping("/**")
 	public String getEndpointDNE() {
 		return "This page does not exist.";
 	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.POST)
+
+	@RequestMapping(value = "/**", method = RequestMethod.POST)
 	public String postEndpointDNE() {
 		return "This page does not exist.";
 	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.PUT)
+
+	@RequestMapping(value = "/**", method = RequestMethod.PUT)
 	public String putEndpointDNE() {
 		return "This page does not exist.";
 	}
-	@RequestMapping(
-			value = "/**",
-			method = RequestMethod.DELETE)
+
+	@RequestMapping(value = "/**", method = RequestMethod.DELETE)
 	public String deleteEndpointDNE() {
 		return "This page does not exist.";
 	}

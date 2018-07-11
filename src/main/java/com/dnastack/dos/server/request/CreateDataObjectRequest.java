@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateDataObjectRequest {
-	
+
 	@Valid
 	@NotNull
 	private DataObject data_object;
-	
+
 }

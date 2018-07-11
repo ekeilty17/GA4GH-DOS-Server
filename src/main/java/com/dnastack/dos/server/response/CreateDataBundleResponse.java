@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class CreateDataBundleResponse {
-	
+
 	private String data_bundle_id;
-	
+
 }

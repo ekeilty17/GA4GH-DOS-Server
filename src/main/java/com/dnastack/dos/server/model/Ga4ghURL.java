@@ -1,8 +1,5 @@
 package com.dnastack.dos.server.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
@@ -16,42 +13,47 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @Embeddable
 @Entity
 public class Ga4ghURL {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@NotNull
-    private String url;
-	
-	@ElementCollection
-    @MapKeyColumn(name="system_metadata_key")
-    @Column(name="system_metadata_value")
-	@NotNull
-    private Map<String, String> system_metadata = new HashMap<>();
-	
-	@ElementCollection
-    @MapKeyColumn(name="user_metadata_key")
-    @Column(name="user_metadata_value")
-	@NotNull
-    private Map<String, String> user_metadata = new HashMap<>();
 
-	
+	@NotNull
+	private String url;
+
+	@ElementCollection
+	@MapKeyColumn(name = "system_metadata_key")
+	@Column(name = "system_metadata_value")
+	@NotNull
+	private Map<String, String> system_metadata = new HashMap<>();
+
+	@ElementCollection
+	@MapKeyColumn(name = "user_metadata_key")
+	@Column(name = "user_metadata_value")
+	@NotNull
+	private Map<String, String> user_metadata = new HashMap<>();
+
+	// Custom Constructors
+
 	public Ga4ghURL() {
+
 	}
-	
+
 	public Ga4ghURL(String url, Map<String, String> system_metadata, Map<String, String> user_metadata) {
 		super();
 		this.url = url;
 		this.system_metadata = system_metadata;
 		this.user_metadata = user_metadata;
 	}
-	
+
 	public Ga4ghURL(Long id, String url, Map<String, String> system_metadata, Map<String, String> user_metadata) {
 		super();
 		this.id = id;
@@ -59,12 +61,12 @@ public class Ga4ghURL {
 		this.system_metadata = system_metadata;
 		this.user_metadata = user_metadata;
 	}
-	
+
 	public Ga4ghURL(URL url) {
 		super();
 		this.url = url.getUrl();
-		this.system_metadata = url.getSystem_metadata();
-		this.user_metadata = url.getUser_metadata();
+		this.system_metadata = new HashMap<>(url.getSystem_metadata());
+		this.user_metadata = new HashMap<>(url.getUser_metadata());
 	}
 
 }

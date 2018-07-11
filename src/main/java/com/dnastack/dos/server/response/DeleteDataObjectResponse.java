@@ -10,5 +10,5 @@ import lombok.Setter;
 public class DeleteDataObjectResponse {
 
 	private String data_object_id;
-	
+
 }

@@ -11,11 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateDataObjectRequest {
-	
+
 	@NotNull
 	private String data_object_id;
 	@Valid
 	@NotNull
 	private DataObject data_object;
-	
+
 }

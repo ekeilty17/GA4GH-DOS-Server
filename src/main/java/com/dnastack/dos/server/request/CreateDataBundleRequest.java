@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateDataBundleRequest {
-	
+
 	@Valid
 	@NotNull
 	private DataBundle data_bundle;
-	
+
 }
