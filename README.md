@@ -31,7 +31,7 @@ Go into root user account in MYSQL `mysql -u root -p`, enter root user password,
 ```
 CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
 GRANT ALL PRIVILEGES ON * . * TO 'dos'@'localhost';
-CREATE DATABASE db_example;
+CREATE DATABASE dos;
 quit;
 ```
 
