@@ -16,6 +16,7 @@ mvn clean spring-boot:run
 * Using Springboot 1.5.15 because 2.x does not have a keycloak adaptor.
 * Java 1.8. Will not work with Java 10.
 * MYSQL 5.7. Will not work with mysql 8.
+* Keycloak 4.0.0. Unsure about backward compatibility.
 * Running mysql on localhost:3306.
 * Running Keycloak on localhost:8081.
 * localhost:8080 is reserved for the server.
