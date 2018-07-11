@@ -90,7 +90,8 @@ public class Ga4ghDataBundleController {
 			value = "/databundles",
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CreateDataBundleResponse createDataBundle(@RequestBody @Valid CreateDataBundleRequest object) throws Exception {
+	public CreateDataBundleResponse createDataBundle(
+			@RequestBody @Valid CreateDataBundleRequest object) throws Exception {
 		// Handling DateTime Exception
 		DateTime D1 = new DateTime(object.getData_bundle().getCreated());
 		DateTime D2 = new DateTime(object.getData_bundle().getUpdated());
@@ -118,15 +119,6 @@ public class Ga4ghDataBundleController {
 		return new UpdateDataBundleResponse(object.getData_bundle_id());
 	}
 	
-	
-	// DELETE Request - temporary - deletes all data bundles in the database
-	@RequestMapping(
-			value = "/databundles/all",
-			method = RequestMethod.DELETE)
-	public String deleteAllDataBundles() {
-		ga4ghDataBundleService.deleteAllObjects();
-		return "All Data Bundles deleted.";
-	}
 	
 	// DELETE Request - deletes a data bundle by data_bundle_id
 	@RequestMapping(
@@ -160,5 +152,13 @@ public class Ga4ghDataBundleController {
 		return ga4ghDataBundleService.getAllObjectsAndAllVersionsRaw();
 	}
 	
+	// DELETE Request - temporary - deletes all data bundles in the database
+	@RequestMapping(
+			value = "/databundles/all",
+			method = RequestMethod.DELETE)
+	public String deleteAllDataBundles() {
+		ga4ghDataBundleService.deleteAllObjects();
+		return "All Data Bundles deleted.";
+	}
 	
 }

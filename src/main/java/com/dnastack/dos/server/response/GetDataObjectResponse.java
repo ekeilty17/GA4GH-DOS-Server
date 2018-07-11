@@ -1,6 +1,6 @@
 package com.dnastack.dos.server.response;
 
-import com.dnastack.dos.server.model.Ga4ghDataObject;
+import com.dnastack.dos.server.model.DataObject;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetDataObjectResponse {
 	
-	private Ga4ghDataObject data_object;
+	private DataObject data_object;
 	
 }

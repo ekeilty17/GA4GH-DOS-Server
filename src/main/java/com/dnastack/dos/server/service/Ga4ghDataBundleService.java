@@ -139,10 +139,12 @@ public class Ga4ghDataBundleService {
 		if (ga4ghList.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", object.getId());
 		}
+		
 		// Updating mostRecent variable
 		Ga4ghDataBundle ga4ghMostRecent = ga4ghDataBundleRepository.findByIdAndMostRecent(object.getId(), true);
 		ga4ghMostRecent.setMostRecent(false);
 		ga4ghDataBundleRepository.save(ga4ghMostRecent);
+		
 		// Saving new objects
 		ga4ghDataBundleRepository.save(object);
 	}

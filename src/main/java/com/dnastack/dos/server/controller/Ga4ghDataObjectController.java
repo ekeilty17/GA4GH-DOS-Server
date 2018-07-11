@@ -1,12 +1,13 @@
 package com.dnastack.dos.server.controller;
 
 import com.dnastack.dos.server.exception.EntityNotFoundException;
+import com.dnastack.dos.server.model.DataObject;
+import com.dnastack.dos.server.model.Ga4ghDataObject;
 import com.dnastack.dos.server.request.CreateDataObjectRequest;
 import com.dnastack.dos.server.request.UpdateDataObjectRequest;
 import com.dnastack.dos.server.response.CreateDataObjectResponse;
 import com.dnastack.dos.server.response.DeleteDataObjectResponse;
 import com.dnastack.dos.server.response.GetDataObjectResponse;
-import com.dnastack.dos.server.response.ListDataBundlesResponse;
 import com.dnastack.dos.server.response.ListDataObjectsResponse;
 import com.dnastack.dos.server.response.UpdateDataObjectResponse;
 import com.dnastack.dos.server.service.Ga4ghDataObjectService;
@@ -19,6 +20,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -40,26 +44,6 @@ public class Ga4ghDataObjectController {
 	private Ga4ghDataObjectService ga4ghDataObjectService;
 
 	
-	// GET Request - temporary
-	@RequestMapping("/dataobjects/test")
-	public String Test() {
-		return "If you are seeing this, then you have been authenticated.";
-	}
-	
-	// POST Request - add data object
-	@RequestMapping(
-			value = "/dataobjects",
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CreateDataObjectResponse createDataObject(@RequestBody @Valid CreateDataObjectRequest object) throws Exception {
-		// Handling DateTime Exception
-		DateTime D1 = new DateTime(object.getData_object().getCreated());
-		DateTime D2 = new DateTime(object.getData_object().getUpdated());
-		
-		ga4ghDataObjectService.addObject(object.getData_object());
-		return new CreateDataObjectResponse(object.getData_object().getId());
-	}
-
 	// GET Request - gets all data objects
 	@RequestMapping("/dataobjects")
 	public ListDataObjectsResponse getDataObjectsList(
@@ -73,19 +57,47 @@ public class Ga4ghDataObjectController {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
 		if (alias != null) {
-			return new ListDataObjectsResponse(ga4ghDataObjectService.getObjectsByAlias(alias, pageable));
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable));
 		}
-		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjects(pageable));
+		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable));
 	}
-	
 	
 	// GET Request - returns specific data object by id
 	@RequestMapping("/dataobjects/{data_object_id}")
 	public GetDataObjectResponse getDataObjectById(
 			@PathVariable String data_object_id,
 			@RequestParam(value = "version", required = false) String version) throws EntityNotFoundException {
-		return new GetDataObjectResponse(ga4ghDataObjectService.getObject(data_object_id));
+		if (version != null) {
+			return new GetDataObjectResponse(new DataObject(ga4ghDataObjectService.getObjectByIdAndVersion(data_object_id, version)));
+		} else {
+			return new GetDataObjectResponse(new DataObject(ga4ghDataObjectService.getObjectByIdWithMostRecentVersion(data_object_id)));
+		}
 	}
+	
+	// GET Request - gets all versions of a data bundle by a data_bundle_id
+	@RequestMapping("/dataobject/{data_object_id}/versions")
+	public ListDataObjectsResponse getDataObjectVersions(
+			@PathVariable String data_object_id, 
+			@PageableDefault(value = 10, page = 0) Pageable pageable) throws EntityNotFoundException {
+		return new ListDataObjectsResponse(ga4ghDataObjectService.getObjectByIdAndAllVersions(data_object_id, pageable));
+	}
+	
+	
+	// POST Request - add data object
+	@RequestMapping(
+			value = "/dataobjects",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public CreateDataObjectResponse createDataObject(
+			@RequestBody @Valid CreateDataObjectRequest object) throws Exception {
+		// Handling DateTime Exception
+		DateTime D1 = new DateTime(object.getData_object().getCreated());
+		DateTime D2 = new DateTime(object.getData_object().getUpdated());
+		
+		ga4ghDataObjectService.addObject(new Ga4ghDataObject(object.getData_object()));
+		return new CreateDataObjectResponse(object.getData_object().getId());
+	}
+
 	
 	// PUT Request - updates a data object by data_object_id
 	@RequestMapping(
@@ -97,18 +109,10 @@ public class Ga4ghDataObjectController {
 		DateTime D1 = new DateTime(object.getData_object().getCreated());
 		DateTime D2 = new DateTime(object.getData_object().getUpdated());
 		
-		ga4ghDataObjectService.updateObject(object.getData_object());
+		ga4ghDataObjectService.updateObject(new Ga4ghDataObject(object.getData_object()));
 		return new UpdateDataObjectResponse(object.getData_object_id());
 	}
 	
-	// DELETE Request - temporary - deletes all data objects
-		@RequestMapping(
-				value = "/dataobjects/all",
-				method = RequestMethod.DELETE)
-		public String deleteDataObjectById() {
-			ga4ghDataObjectService.deleteAllObjects();
-			return "All Data Objects deleted.";
-		}
 	
 	// DELETE Request - deletes data object by data_object_id
 	@RequestMapping(
@@ -120,16 +124,34 @@ public class Ga4ghDataObjectController {
 	}
 	
 	
+	
+	// TEMPORARY METHODS - for debugging purposes
+	
+	// GET Request - temporary
+	@RequestMapping("/dataobjects/test")
+	public String Test() {
+		return "If you are seeing this, then you have been authenticated.";
+	}
+	
 	// GET Request - temporary - gets all data objects and all their versions
-	@RequestMapping("/dataobject/allVersions")
-	public ListDataObjectsResponse getAllDataBundlesAndAllVersions() {
-		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsAndAllVersions());
+	@RequestMapping("/dataobjects/allVersions")
+	public ListDataObjectsResponse getAllDataBundlesAndAllVersions(
+			@PageableDefault(value = 10, page = 0) Pageable pageable) {
+		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsAndAllVersions(pageable));
 	}
 	
-	// GET Request - gets all versions of a data bundle by a data_bundle_id
-	@RequestMapping("/dataobject/{data_bundle_id}/versions")
-	public ListDataObjectsResponse getDataBundleVersions(@PathVariable String data_object_id) {
-		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllVersionsById(data_object_id));
+	// GET Request - temporary - gets all data objects and all their versions as they are represented in the database
+	@RequestMapping("/dataobjects/allVersions/raw")
+	public List<Ga4ghDataObject> getAllDataBundlesAndAllVersionsRaw() {
+		return ga4ghDataObjectService.getAllObjectsAndAllVersionsRaw();
 	}
 	
+	// DELETE Request - temporary - deletes all data objects
+	@RequestMapping(
+			value = "/dataobjects/all",
+			method = RequestMethod.DELETE)
+	public String deleteDataObjectById() {
+		ga4ghDataObjectService.deleteAllObjects();
+		return "All Data Objects deleted.";
+	}
 }

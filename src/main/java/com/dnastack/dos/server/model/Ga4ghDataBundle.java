@@ -31,7 +31,7 @@ import java.util.Map;
 public class Ga4ghDataBundle {
 	
 	// TODO look into "@JsonView" for dealing with different permissions per element in data
-	// TODO or us a DTO layer...probably better
+	// 		or use a DTO layer...probably better
 	
 	@Id
 	@NotNull
@@ -83,6 +83,9 @@ public class Ga4ghDataBundle {
 	@NotNull
     private Map<String, String> user_metadata;
 
+	
+	// Custom Constructors
+	
 	public Ga4ghDataBundle() {
 		
 	}
@@ -93,6 +96,24 @@ public class Ga4ghDataBundle {
 		super();
 		this.versionId = id + 'v' + version;
 		this.mostRecent = true;
+		this.id = id;
+		this.data_object_ids = data_object_ids;
+		this.created = created;
+		this.updated = updated;
+		this.version = version;
+		this.checksums = checksums;
+		this.description = description;
+		this.aliases = aliases;
+		this.system_metadata = system_metadata;
+		this.user_metadata = user_metadata;
+	}
+	
+	public Ga4ghDataBundle(String versionId, String id, boolean mostRecent, List<String> data_object_ids, String created, String updated,
+			String version, List<Checksum> checksums, String description, List<String> aliases,
+			Map<String, String> system_metadata, Map<String, String> user_metadata) {
+		super();
+		this.versionId = versionId;
+		this.mostRecent = mostRecent;
 		this.id = id;
 		this.data_object_ids = data_object_ids;
 		this.created = created;

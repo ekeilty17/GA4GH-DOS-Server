@@ -1,6 +1,6 @@
 package com.dnastack.dos.server.request;
 
-import com.dnastack.dos.server.model.Ga4ghDataObject;
+import com.dnastack.dos.server.model.DataObject;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,6 +16,6 @@ public class UpdateDataObjectRequest {
 	private String data_object_id;
 	@Valid
 	@NotNull
-	private Ga4ghDataObject data_object;
+	private DataObject data_object;
 	
 }
