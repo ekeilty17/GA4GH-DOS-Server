@@ -107,7 +107,7 @@ public class Ga4ghDataObjectController {
 				method = RequestMethod.DELETE)
 		public String deleteDataObjectById() {
 			ga4ghDataObjectService.deleteAllObjects();
-			return "All Data Objects Deleted.";
+			return "All Data Objects deleted.";
 		}
 	
 	// DELETE Request - deletes data object by data_object_id

@@ -66,9 +66,11 @@ public class Ga4ghDataObject {
     @Singular
     @ElementCollection
     private List<String> aliases;
-
+    
+    /*
     public Ga4ghDataObject id(String id) {
         this.id = id;
         return this;
     }
+    */
 }

@@ -1,6 +1,6 @@
 package com.dnastack.dos.server.response;
 
-import com.dnastack.dos.server.model.Ga4ghDataBundle;
+import com.dnastack.dos.server.model.DataBundle;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetDataBundleResponse {
 	
-	private Ga4ghDataBundle data_bundle;
+	private DataBundle data_bundle;
 	
 }

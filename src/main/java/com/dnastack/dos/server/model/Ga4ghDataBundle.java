@@ -24,19 +24,21 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+//@Builder
 @Entity
 @ToString(exclude = {"checksums"})
 @EqualsAndHashCode(exclude = {"checksums"})
-@EntityListeners(AuditingEntityListener.class)
 public class Ga4ghDataBundle {
 	
 	// TODO look into "@JsonView" for dealing with different permissions per element in data
 	// TODO or us a DTO layer...probably better
 	
 	@Id
+	@NotNull
+	private String versionId;
+	
+	private boolean mostRecent;
+	
 	@NotNull
 	private String id;
 	
@@ -80,20 +82,43 @@ public class Ga4ghDataBundle {
     @Column(name="user_metadata_value")
 	@NotNull
     private Map<String, String> user_metadata;
-	
-	/*
-	public Ga4ghDataBundle(Ga4ghDataBundle ga4ghDataBundle) {
-		this(ga4ghDataBundle.getId(), ga4ghDataBundle.getData_object_ids(), ga4ghDataBundle.getCreated(), 
-			 ga4ghDataBundle.getUpdated(), ga4ghDataBundle.getVersion(), ga4ghDataBundle.getChecksums(), ga4ghDataBundle.getDescription(), 
-			 ga4ghDataBundle.getAliases(), ga4ghDataBundle.getSystem_metadata(), ga4ghDataBundle.getUser_metadata());
+
+	public Ga4ghDataBundle() {
+		
 	}
-	*/
 	
-	/*
-	 * @Entity and @Id covert the class variables into columns in the SQL database
-	 * @NotNull means it's a required field
-	 * @Singular is part of lombok, works with the @Builder (part of @Data) and is needed to add data to the list in our class definition
-	 * @ElementCollect is needed when adding data that's in a list to the SQL database
-	 * @Embedded maps non-entities to columns in the SQL database. These are user-defined types such as Checksum and URL
-	 */
+	public Ga4ghDataBundle(String id, List<String> data_object_ids, String created, String updated,
+			String version, List<Checksum> checksums, String description, List<String> aliases,
+			Map<String, String> system_metadata, Map<String, String> user_metadata) {
+		super();
+		this.versionId = id + 'v' + version;
+		this.mostRecent = true;
+		this.id = id;
+		this.data_object_ids = data_object_ids;
+		this.created = created;
+		this.updated = updated;
+		this.version = version;
+		this.checksums = checksums;
+		this.description = description;
+		this.aliases = aliases;
+		this.system_metadata = system_metadata;
+		this.user_metadata = user_metadata;
+	}
+	
+	public Ga4ghDataBundle(DataBundle dataBundle) {
+		super();
+		this.versionId =  dataBundle.getId() + 'v' + dataBundle.getVersion();
+		this.mostRecent = true;
+		this.id = dataBundle.getId();
+		this.data_object_ids = dataBundle.getData_object_ids();
+		this.created = dataBundle.getCreated(); 
+		this.updated = dataBundle.getUpdated();
+		this.version = dataBundle.getVersion();
+		this.checksums = dataBundle.getChecksums();
+		this.description = dataBundle.getDescription();
+		this.aliases = dataBundle.getAliases();
+		this.system_metadata = dataBundle.getSystem_metadata();
+		this.user_metadata = dataBundle.getUser_metadata();
+	}
+	
 }

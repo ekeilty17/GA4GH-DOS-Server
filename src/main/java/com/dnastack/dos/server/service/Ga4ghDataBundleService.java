@@ -1,6 +1,7 @@
 package com.dnastack.dos.server.service;
 
 import com.dnastack.dos.server.exception.EntityNotFoundException;
+import com.dnastack.dos.server.model.DataBundle;
 import com.dnastack.dos.server.model.Ga4ghDataBundle;
 import com.dnastack.dos.server.repository.Ga4ghDataBundleRepository;
 
@@ -24,27 +25,75 @@ public class Ga4ghDataBundleService {
 	@Autowired
 	private Ga4ghDataBundleRepository ga4ghDataBundleRepository;
 	
-	public Ga4ghDataBundle getObject(String id) throws EntityNotFoundException {
-		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(id);
+	// Helper - converts list of DataBundle objects to a paginated list
+	public Page<DataBundle> paginateList(List<DataBundle> objectList, Pageable pageable) {
+		int start = pageable.getOffset();
+		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size() : (start + pageable.getPageSize());
+		return new PageImpl<DataBundle>(	objectList.subList(start, end), 
+											new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()), 
+											objectList.size()
+										);
+	}
+	
+	
+	
+	// GET Specific Object
+	public Ga4ghDataBundle getObjectByIdAndVersion(String id, String version) throws EntityNotFoundException {
+		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findByIdAndVersion(id, version);
 		if (ga4gh == null) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
 		}
 		return ga4gh;
 	}
 	
-	public Page<Ga4ghDataBundle> getAllObjects(Pageable pageable) {
-		return ga4ghDataBundleRepository.findAll(pageable);
+	public Ga4ghDataBundle getObjectByIdWithMostRecentVersion(String id) throws EntityNotFoundException {
+		List<Ga4ghDataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findByIdEquals(id).forEach(o -> {
+																if (o.isMostRecent() == true) {
+																	objects.add(o);
+																}
+															});
+		if (objects.isEmpty()) {
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
+		}
+		return objects.get(0);
 	}
 	
-	public List<Ga4ghDataBundle> getAllObjectsAndAllVersions() {
-		return null;
+	
+	
+	// GET List of Objects by some criteria
+	public Page<DataBundle> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException {
+		List<DataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findByIdEquals(id).forEach(o -> objects.add(new DataBundle(o)));
+		if (objects.isEmpty()) {
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
+		}
+		return paginateList(objects, pageable);
 	}
 	
-	public List<Ga4ghDataBundle> getAllVersionsById(String id) {
-		return null;
+	public Page<DataBundle> getAllObjectsWithMostRecentVersions(Pageable pageable) {
+		List<DataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findAll().forEach(o -> {
+														if (o.isMostRecent() == true) {
+															objects.add(new DataBundle(o));
+														}
+													});
+		return paginateList(objects, pageable);
 	}
 	
-	public Page<Ga4ghDataBundle> getObjectsByAlias(String alias, Pageable pageable) {
+	public Page<DataBundle> getAllObjectsAndAllVersions(Pageable pageable) {
+		List<DataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findAll().forEach(o -> objects.add(new DataBundle(o)));
+		return paginateList(objects, pageable);
+	}
+	
+	public List<Ga4ghDataBundle> getAllObjectsAndAllVersionsRaw() {
+		List<Ga4ghDataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findAll().forEach(o -> objects.add(o));
+		return objects;
+	}
+	
+	public Page<DataBundle> getObjectsByAlias(String alias, Pageable pageable) {
 		// TODO I don't really like how I did this for a few reasons, but it works
 		// 		1) The query of the database loads every object, which is bad
 		//		2) I'm doing the pagination manually, which is also bad
@@ -53,53 +102,62 @@ public class Ga4ghDataBundleService {
 		//		Then do the manual pagination to that list
 		//		You can't set nativeQuery = True if you want the Repo to return Page<Ga4ghDataBundle>
 		//		So this is the best solution I can think of
-		List<Ga4ghDataBundle> objects = new ArrayList<>();
+		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> {
 														if(o.getAliases().contains(alias)){
-															objects.add(o);
+															objects.add(new DataBundle(o));
 														}
 													});
-		int start = pageable.getOffset();
-		int end = (start + pageable.getPageSize()) > objects.size() ? objects.size() : (start + pageable.getPageSize());
-		return new PageImpl<Ga4ghDataBundle>(	objects.subList(start, end), 
-												new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()), 
-												objects.size()
-											);
+		return paginateList(objects, pageable);
 	}
 	
+	public Page<DataBundle> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) {
+		List<DataBundle> objects = new ArrayList<>();
+		ga4ghDataBundleRepository.findAll().forEach(o -> {
+														if(o.isMostRecent() && o.getAliases().contains(alias)){
+															objects.add(new DataBundle(o));
+														}
+													});
+		return paginateList(objects, pageable);
+	}
+	
+	
+	
+	// POST
 	public void addObject(Ga4ghDataBundle object) throws Exception {
-		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(object.getId());
-		if (ga4gh != null) {
+		List<Ga4ghDataBundle> ga4ghList = ga4ghDataBundleRepository.findByIdEquals(object.getId());
+		if (!ga4ghList.isEmpty()) {
 			throw new Exception("Data Bundle with that id already exists in the database. Use a PUT Request in order to update.");
 		}
 		ga4ghDataBundleRepository.save(object);
 	}
 	
+	
+	// PUT
 	public void updateObject(Ga4ghDataBundle object) throws EntityNotFoundException {
-		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(object.getId());
-		if (ga4gh == null) {
+		List<Ga4ghDataBundle> ga4ghList = ga4ghDataBundleRepository.findByIdEquals(object.getId());
+		if (ga4ghList.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", object.getId());
 		}
-		/*
-		// FIXME replace Integer.parseInt and != with a better comparer class
-		// TODO use >, <, and == to determine which table to add to
-		if (Integer.parseInt(ga4gh.getVersion()) != Integer.parseInt(object.getVersion())) {
-			ga4ghDataBundleVersioningRepository.save(new Ga4ghDataBundleVersioning(ga4gh));
-			ga4ghDataBundleRepository.save(object);
-		}
-		*/
+		// Updating mostRecent variable
+		Ga4ghDataBundle ga4ghMostRecent = ga4ghDataBundleRepository.findByIdAndMostRecent(object.getId(), true);
+		ga4ghMostRecent.setMostRecent(false);
+		ga4ghDataBundleRepository.save(ga4ghMostRecent);
+		// Saving new objects
 		ga4ghDataBundleRepository.save(object);
 	}
 	
+	
+	// DELETE
 	public void deleteAllObjects() {
 		ga4ghDataBundleRepository.deleteAll();
 	}
 	
 	public void deleteObject(String id) throws EntityNotFoundException {
-		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findOne(id);
-		if (ga4gh == null) {
+		List<Ga4ghDataBundle> objects = ga4ghDataBundleRepository.findByIdEquals(id);
+		if (objects.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
 		}
-		ga4ghDataBundleRepository.delete(id);
+		objects.forEach(o -> ga4ghDataBundleRepository.delete(o.getId() + 'v' + o.getVersion()));
 	}
 }

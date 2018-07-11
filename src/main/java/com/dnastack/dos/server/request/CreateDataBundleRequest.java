@@ -1,6 +1,6 @@
 package com.dnastack.dos.server.request;
 
-import com.dnastack.dos.server.model.Ga4ghDataBundle;
+import com.dnastack.dos.server.model.DataBundle;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -14,6 +14,6 @@ public class CreateDataBundleRequest {
 	
 	@Valid
 	@NotNull
-	private Ga4ghDataBundle data_bundle;
+	private DataBundle data_bundle;
 	
 }
