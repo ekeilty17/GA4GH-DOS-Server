@@ -1,5 +1,6 @@
 package com.dnastack.dos.server.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -25,20 +26,20 @@ public class Ga4ghURL {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	//@NotNull	FIXME
+	@NotNull
     private String url;
 	
 	@ElementCollection
     @MapKeyColumn(name="system_metadata_key")
     @Column(name="system_metadata_value")
-	//@NotNull	FIXME
-    private Map<String, String> system_metadata;
+	@NotNull
+    private Map<String, String> system_metadata = new HashMap<>();
 	
 	@ElementCollection
     @MapKeyColumn(name="user_metadata_key")
     @Column(name="user_metadata_value")
-	//@NotNull	FIXME
-    private Map<String, String> user_metadata;
+	@NotNull
+    private Map<String, String> user_metadata = new HashMap<>();
 
 	
 	public Ga4ghURL() {

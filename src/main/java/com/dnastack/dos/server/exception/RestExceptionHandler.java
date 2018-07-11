@@ -61,7 +61,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), BAD_REQUEST.value(), ex);
+        // TODO Have a better error message
+    	ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), BAD_REQUEST.value(), ex);
         return buildResponseEntity(errorResponse);
     }
     

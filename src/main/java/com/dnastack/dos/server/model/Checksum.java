@@ -25,8 +25,8 @@ public class Checksum {
 	}
 	
 	@NotNull
-	private String checksum = null;
-	private Type type = null;
+	private String checksum;
+	private Type type;
 
 	public Checksum checksum(String checksum) {
 		this.checksum = checksum;

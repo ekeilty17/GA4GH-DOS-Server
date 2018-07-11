@@ -54,23 +54,21 @@ public class Ga4ghDataObject {
     @Singular
     @ElementCollection
     @Embedded
-    //@NotNull 	// FIXME Validation error when @NotNull is present
-    //@Valid
-    private List<Checksum> checksums;
+    @NotNull 	// FIXME Validation error when @NotNull is present
+    @Valid
+    private List<Checksum> checksums = new ArrayList<>();
     
-    // TODO look into if FetchType should be changed to LAZY
-    // @OneToMany(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     // TODO look into "join table for mapping collections if you want Cascade collection"
     // FIXME urls must have a unique id, which means can't have duplicate urls
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@Valid
-    private List<Ga4ghURL> urls;
+    @Valid
+    private List<Ga4ghURL> urls = new ArrayList<>();
     
     private String description;
     
     @Singular
     @ElementCollection
-    private List<String> aliases;
+    private List<String> aliases = new ArrayList<>();
 
     
     // Custom Constructors

@@ -11,13 +11,8 @@ import lombok.Setter;
 @Setter
 public class URL {
 	
-	//@NotNull
     private String url;
-	
-	//@NotNull
     private Map<String, String> system_metadata;
-	
-	//@NotNull
     private Map<String, String> user_metadata;
 
 	

@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 import lombok.Singular;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,26 +64,26 @@ public class Ga4ghDataBundle {
     @Embedded
     @NotNull
     @Valid
-	private List<Checksum> checksums;
+	private List<Checksum> checksums = new ArrayList<>();
     
 	private String description;
     
 	@Singular
     @ElementCollection
-    private List<String> aliases;
+    private List<String> aliases = new ArrayList<>();
     
 	@ElementCollection
     @MapKeyColumn(name="system_metadata_key")
     @Column(name="system_metadata_value")
     //@CollectionTable(name="example_attributes", joinColumns=@JoinColumn(name="example_id"))
 	@NotNull
-    private Map<String, String> system_metadata;
+    private Map<String, String> system_metadata = new HashMap<>();
 	
 	@ElementCollection
     @MapKeyColumn(name="user_metadata_key")
     @Column(name="user_metadata_value")
 	@NotNull
-    private Map<String, String> user_metadata;
+    private Map<String, String> user_metadata = new HashMap<>();
 
 	
 	// Custom Constructors
