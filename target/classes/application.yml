@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  
+spring:
+  datasource:
+    #TODO add SSL connection
+    url: jdbc:mysql://localhost:3306/dos?useSSL=false
+    username: dos
+    password: dos
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+keycloak:
+  principal-attribute: ekeilty
+  auth-server-url: http://localhost:8081/auth
+  realm: dos-server
+  resource: dos-server-app
+  public-client: true
+  
+  security-constraints:
+    - authRoles:
+      - user
+      securityCollections:
+      - patterns:
+        - /databundles/**
+        - /dataobjects/**
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
