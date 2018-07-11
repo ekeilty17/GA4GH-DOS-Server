@@ -24,7 +24,7 @@ mvn clean spring-boot:run
 
 * Make a user named "dos" with a password "dos"
 * grant all privileges
-* Make a database called "db_example"
+* Make a database called "dos"
 
 Go into root user account in MYSQL `mysql -u root -p`, enter root user password, and execute this:
 
