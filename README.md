@@ -60,3 +60,11 @@ line 565 (towards the end of the file) is the following:
 
 Change it to
 `<socket-binding name="http" port="${jboss.http.port:8081}"/>`
+
+### Unit Tests
+
+run
+```
+mvn clean package
+
+```
