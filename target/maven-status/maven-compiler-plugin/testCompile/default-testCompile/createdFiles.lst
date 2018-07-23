@@ -1,1 +1,4 @@
-com/dnastack/dos/server/DosServer2ApplicationTests.class
+com/dnastack/dos/server/controller/Ga4ghDataBundleControllerTest.class
+com/dnastack/dos/server/controller/Ga4ghDataObjectControllerTest.class
+com/dnastack/dos/server/DosServerApplicationTests.class
+com/dnastack/dos/server/service/Ga4ghDataBundleServiceTest.class

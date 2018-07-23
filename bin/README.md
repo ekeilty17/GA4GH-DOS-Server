@@ -16,6 +16,7 @@ mvn clean spring-boot:run
 * Using Springboot 1.5.15 because 2.x does not have a keycloak adaptor.
 * Java 1.8. Will not work with Java 10.
 * MYSQL 5.7. Will not work with mysql 8.
+* Keycloak 4.0.0. Unsure about backward compatibility.
 * Running mysql on localhost:3306.
 * Running Keycloak on localhost:8081.
 * localhost:8080 is reserved for the server.
@@ -24,14 +25,14 @@ mvn clean spring-boot:run
 
 * Make a user named "dos" with a password "dos"
 * grant all privileges
-* Make a database called "db_example"
+* Make a database called "dos"
 
 Go into root user account in MYSQL `mysql -u root -p`, enter root user password, and execute this:
 
 ```
 CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
 GRANT ALL PRIVILEGES ON * . * TO 'dos'@'localhost';
-CREATE DATABASE db_example;
+CREATE DATABASE dos;
 quit;
 ```
 

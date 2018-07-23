@@ -40,7 +40,7 @@ public class Ga4ghDataBundleService {
 	public Ga4ghDataBundle getObjectByIdAndVersion(String id, String version) throws EntityNotFoundException {
 		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findByIdAndVersion(id, version);
 		if (ga4gh == null) {
-			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id", id);
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "version", version);
 		}
 		return ga4gh;
 	}
@@ -176,4 +176,5 @@ public class Ga4ghDataBundleService {
 		}
 		objects.forEach(o -> ga4ghDataBundleRepository.delete(o.getId() + 'v' + o.getVersion()));
 	}
+	
 }

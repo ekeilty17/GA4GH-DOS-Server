@@ -1,6 +1,5 @@
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/exception/EntityNotFoundException.java
-/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/SystemMetadata.java
-/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/request/ListRequest.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/DataObject.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/ErrorResponse.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/Checksum.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/ListDataBundlesResponse.java
@@ -17,10 +16,13 @@
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/request/UpdateDataBundleRequest.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/DeleteDataBundleResponse.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/repository/Ga4ghDataObjectRepository.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/Ga4ghURL.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/request/UpdateDataObjectRequest.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/controller/GenericController.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/URL.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/DataBundle.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/controller/Ga4ghDataBundleController.java
-/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/UserMetadata.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/repository/Ga4ghURLRepository.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/UpdateDataObjectResponse.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/Ga4ghDataBundle.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/GetDataBundleResponse.java

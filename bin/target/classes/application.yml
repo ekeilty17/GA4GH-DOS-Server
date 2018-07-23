@@ -3,12 +3,13 @@ server:
   
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/db_example?useSSL=false
+    #TODO add SSL connection
+    url: jdbc:mysql://localhost:3306/dos?useSSL=false
     username: dos
     password: dos
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -21,13 +22,13 @@ keycloak:
   resource: dos-server-app
   public-client: true
   
-  #security-constraints:
-  #  - authRoles:
-  #    - user
-  #    securityCollections:
-  #    - patterns:
-  #      - /databundles/*
-  #      - /dataobjects/*
+  security-constraints:
+    - authRoles:
+      - user
+      securityCollections:
+      - patterns:
+        - /databundles/**
+        - /dataobjects/**
 
 
 logging:

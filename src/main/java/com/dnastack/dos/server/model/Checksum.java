@@ -11,9 +11,14 @@ import lombok.Setter;
 @Setter
 public class Checksum {
 
+	public void setType(Type type) {
+		this.type = type;
+	}
+
 	public enum Type {
 		md5("md5"), multipart_md5("multipart-md5"), S3("S3"), sha256("sha256"), sha512("sha512");
 
+		
 		private String val;
 
 		private Type(String val) {
@@ -27,16 +32,20 @@ public class Checksum {
 
 	// Custom Constructors
 
-	public Checksum checksum(String checksum) {
+	public Checksum() {
+		
+	}
+	
+	public Checksum(String checksum) {
+		super();
 		this.checksum = checksum;
 		this.type = Type.md5;
-		return this;
 	}
 
-	public Checksum checksum(String checksum, Type type) {
+	public Checksum(String checksum, Type type) {
+		super();
 		this.checksum = checksum;
 		this.type = type;
-		return this;
 	}
 
 }

@@ -1,1 +1,4 @@
-/Users/Standard/WORK/GA4GH-DOS-Server/src/test/java/com/dnastack/dos/server/DosServer2ApplicationTests.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/test/java/com/dnastack/dos/server/controller/Ga4ghDataObjectControllerTest.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/test/java/com/dnastack/dos/server/controller/Ga4ghDataBundleControllerTest.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/test/java/com/dnastack/dos/server/service/Ga4ghDataBundleServiceTest.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/test/java/com/dnastack/dos/server/DosServerApplicationTests.java
