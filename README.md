@@ -2,6 +2,13 @@
 
 Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit alliance formed to accelerate the potential of research and medicine to advance human health. They have developed the Data Object Service (DOS), which is an emerging standard for specifying location of data across different cloud environments. This is an implementation of a DOS Server, which hosts and allows the discovery of data objects. The GA4GH specification of the DOS Server API is found [here](https://ga4gh.github.io/data-object-service-schemas/#/).
 
+## Table of Contents
+* [Dependency Checklist](#dependency-checklist)
+* [Set Up](#set-up)
+  * [MYSQL Set Up](#mysql-set-up)
+  * [KeyCloak Set Up](#keycloak-set-up)
+  * [Unit Tests](#unit-tests)
+* [To Use](#to-use)
 
 ## Dependency Checklist
 
@@ -67,7 +74,7 @@ Results :
 Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
 ```
 
-## To Run
+## To Use
 
 Once the above has been completed, simply execute:
 
