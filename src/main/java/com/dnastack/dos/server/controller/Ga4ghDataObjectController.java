@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
@@ -48,36 +49,39 @@ public class Ga4ghDataObjectController {
 			@RequestParam(value = "page_size", required = false) Integer page_size,
 			@RequestParam(value = "page_token", required = false) String page_token,
 			@PageableDefault(value = 5, page = 0) Pageable pageable) throws Exception {
-		
+
 		// Creating correct pageable variable
 		if (page_token != null) {
 			try {
 				Integer.valueOf(page_token);
 			} catch (Exception e) {
-				throw new Exception("Invalid page token");
+				throw new InvalidParameterException("Invalid page token");
 			}
 			pageable = new PageRequest(Integer.valueOf(page_token), pageable.getPageSize());
 		}
 		if (page_size != null) {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
-		
+
 		if (alias != null) {
 			try {
 				ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable.next());
 				return new ListDataObjectsResponse(
-						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable), String.valueOf(pageable.next().getPageNumber()));
+						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable),
+						String.valueOf(pageable.next().getPageNumber()));
 			} catch (Exception e) {
 				return new ListDataObjectsResponse(
 						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable), "0");
 			}
 		}
-		
+
 		try {
 			ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable.next());
-			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable), String.valueOf(pageable.next().getPageNumber()));
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable),
+					String.valueOf(pageable.next().getPageNumber()));
 		} catch (Exception e) {
-			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable), "0");
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable),
+					"0");
 		}
 	}
 
@@ -124,6 +128,7 @@ public class Ga4ghDataObjectController {
 		if (!data_object_id.equals(object.getData_object_id())) {
 			throw new Exception("Conflicting data_object_id's in url and request body.");
 		}
+
 		ga4ghDataObjectService.updateObject(data_object_id, new Ga4ghDataObject(object.getData_object()));
 		return new UpdateDataObjectResponse(object.getData_object().getId());
 	}

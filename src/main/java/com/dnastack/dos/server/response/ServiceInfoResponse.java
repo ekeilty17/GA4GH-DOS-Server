@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ServiceInfoResponse {
-	
+
 	private String version;
 	private String name;
 	private String description;
-	
+
 }

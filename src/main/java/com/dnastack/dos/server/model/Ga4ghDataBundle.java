@@ -106,11 +106,11 @@ public class Ga4ghDataBundle {
 		this.system_metadata = system_metadata;
 		this.user_metadata = user_metadata;
 	}
-	
+
 	// Missing: versionId
-	public Ga4ghDataBundle(boolean mostRecent, String id, List<String> data_object_ids,
-			String created, String updated, String version, List<Checksum> checksums, String description,
-			List<String> aliases, Map<String, String> system_metadata, Map<String, String> user_metadata) {
+	public Ga4ghDataBundle(boolean mostRecent, String id, List<String> data_object_ids, String created, String updated,
+			String version, List<Checksum> checksums, String description, List<String> aliases,
+			Map<String, String> system_metadata, Map<String, String> user_metadata) {
 		super();
 		this.versionId = id + 'v' + version;
 		this.mostRecent = mostRecent;
@@ -125,7 +125,7 @@ public class Ga4ghDataBundle {
 		this.system_metadata = system_metadata;
 		this.user_metadata = user_metadata;
 	}
-	
+
 	public Ga4ghDataBundle(String versionId, boolean mostRecent, String id, List<String> data_object_ids,
 			String created, String updated, String version, List<Checksum> checksums, String description,
 			List<String> aliases, Map<String, String> system_metadata, Map<String, String> user_metadata) {

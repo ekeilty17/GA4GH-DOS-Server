@@ -92,9 +92,9 @@ public class Ga4ghDataObject {
 	}
 
 	// Missing: versionId
-	public Ga4ghDataObject(boolean mostRecent, String id, String name, String size, String created,
-			String updated, String version, String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls,
-			String description, List<String> aliases) {
+	public Ga4ghDataObject(boolean mostRecent, String id, String name, String size, String created, String updated,
+			String version, String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls, String description,
+			List<String> aliases) {
 		super();
 		this.versionId = id + 'v' + version;
 		this.mostRecent = mostRecent;
@@ -110,7 +110,7 @@ public class Ga4ghDataObject {
 		this.description = description;
 		this.aliases = aliases;
 	}
-	
+
 	public Ga4ghDataObject(String versionId, boolean mostRecent, String id, String name, String size, String created,
 			String updated, String version, String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls,
 			String description, List<String> aliases) {

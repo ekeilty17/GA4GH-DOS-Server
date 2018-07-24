@@ -18,7 +18,6 @@ public class Checksum {
 	public enum Type {
 		md5("md5"), multipart_md5("multipart-md5"), S3("S3"), sha256("sha256"), sha512("sha512");
 
-		
 		private String val;
 
 		private Type(String val) {
@@ -33,9 +32,9 @@ public class Checksum {
 	// Custom Constructors
 
 	public Checksum() {
-		
+
 	}
-	
+
 	public Checksum(String checksum) {
 		super();
 		this.checksum = checksum;

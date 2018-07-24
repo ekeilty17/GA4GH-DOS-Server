@@ -29,25 +29,52 @@ public class Ga4ghDataBundleService {
 	private Ga4ghDataBundleRepository ga4ghDataBundleRepository;
 
 	// Helper - converts list of DataBundle objects to a paginated list
-	public Page<DataBundle> paginateList(List<DataBundle> objectList, Pageable pageable) throws InvalidParameterException {
+	public Page<DataBundle> paginateList(List<DataBundle> objectList, Pageable pageable)
+			throws InvalidParameterException {
 		int start = pageable.getOffset();
 		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size()
 				: (start + pageable.getPageSize());
-		
+
 		if (start >= end) {
 			throw new InvalidParameterException("Page does not exist, page size is too large.");
 		}
-		
+
 		return new PageImpl<DataBundle>(objectList.subList(start, end),
 				new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
 				objectList.size());
 	}
 
+	// Helper - compare version Strings of the form x.x.x
+	public boolean isVersionCorrectForm(String v) {
+		return v.matches("\\d+|\\d+(\\.\\d+)|\\d+(\\.\\d+(\\.\\d+))");
+	}
+	public boolean isFirstVersionGreaterOrEqual(String v1, String v2) throws InvalidParameterException {
+		
+		if (!isVersionCorrectForm(v1) || !isVersionCorrectForm(v2)) {
+			throw new InvalidParameterException("Invalid version form. Version numbers must be of the form x.x.x");
+		}
+		
+		String[] v1Parts = v1.split("\\.");
+		String[] v2Parts = v2.split("\\.");
+		 
+		int length = Math.max(v1Parts.length, v2Parts.length);
+		for(int i = 0; i < length; i++) {
+		    int v1Part = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+		    int v2Part = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+		    
+		    if (v1Part < v2Part)
+		        return false;
+		    if (v1Part > v2Part)
+		        return true;
+		}
+		return true;
+	}
+	
 	// GET Specific Object
 	public Ga4ghDataBundle getObjectByIdAndVersion(String id, String version) throws EntityNotFoundException {
 		Ga4ghDataBundle ga4gh = ga4ghDataBundleRepository.findByIdAndVersion(id, version);
 		if (ga4gh == null) {
-			throw new EntityNotFoundException(Ga4ghDataBundle.class, "version", version);
+			throw new EntityNotFoundException(Ga4ghDataBundle.class, "id and version", id + 'v' + version);
 		}
 		return ga4gh;
 	}
@@ -66,7 +93,8 @@ public class Ga4ghDataBundleService {
 	}
 
 	// GET List of Objects by some criteria
-	public Page<DataBundle> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException, Exception {
+	public Page<DataBundle> getObjectByIdAndAllVersions(String id, Pageable pageable)
+			throws EntityNotFoundException, Exception {
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findByIdEquals(id).forEach(o -> objects.add(new DataBundle(o)));
 		if (objects.isEmpty()) {
@@ -117,7 +145,7 @@ public class Ga4ghDataBundleService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataBundle> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) throws Exception{
+	public Page<DataBundle> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) throws Exception {
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> {
 			if (o.isMostRecent() && o.getAliases().contains(alias)) {
@@ -133,6 +161,9 @@ public class Ga4ghDataBundleService {
 		if (!ga4ghList.isEmpty()) {
 			throw new Exception(
 					"Data Bundle with that id already exists in the database. Use a PUT Request in order to update.");
+		}
+		if (!isVersionCorrectForm(object.getVersion())) {
+			throw new InvalidParameterException("Invalid version form. Version numbers must be of the form x.x.x");
 		}
 		ga4ghDataBundleRepository.save(object);
 	}
@@ -162,13 +193,20 @@ public class Ga4ghDataBundleService {
 		} else {
 			// Updating mostRecent variable
 			Ga4ghDataBundle ga4ghMostRecent = ga4ghDataBundleRepository.findByIdAndMostRecent(object.getId(), true);
-			ga4ghMostRecent.setMostRecent(false);
+			
+			// Comparing version numbers and setting correct object to highest version
+			if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghMostRecent.getVersion())) {
+				ga4ghMostRecent.setMostRecent(false);
+			} else {
+				object.setMostRecent(false);
+			}
+			
 			ga4ghDataBundleRepository.save(ga4ghMostRecent);
 		}
-		
+
 		// Saving new objects
 		ga4ghDataBundleRepository.save(object);
-		
+
 	}
 
 	// DELETE
@@ -183,5 +221,5 @@ public class Ga4ghDataBundleService {
 		}
 		objects.forEach(o -> ga4ghDataBundleRepository.delete(o.getId() + 'v' + o.getVersion()));
 	}
-	
+
 }

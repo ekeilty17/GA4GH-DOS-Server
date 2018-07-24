@@ -11,9 +11,10 @@ public class GenericController {
 
 	@RequestMapping("/service-info")
 	public ServiceInfoResponse getServiceInfo() {
-		return new ServiceInfoResponse("1.0.0", "DOS Server", "Server capable of hosting and allowing the discovery of data objects.");
+		return new ServiceInfoResponse("1.0.0", "DOS Server",
+				"Server capable of hosting and allowing the discovery of data objects.");
 	}
-	
+
 	// Handling requests to pages that DNE
 	@RequestMapping("/**")
 	public String getEndpointDNE() {

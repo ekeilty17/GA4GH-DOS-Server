@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
@@ -48,39 +49,43 @@ public class Ga4ghDataBundleController {
 																							// should do
 			@RequestParam(value = "page_size", required = false) Integer page_size,
 			@RequestParam(value = "page_token", required = false) String page_token,
-			@PageableDefault(value = 5, page = 0) Pageable pageable) throws Exception { // TODO ask what the default should be
-		
+			@PageableDefault(value = 5, page = 0) Pageable pageable) throws Exception { // TODO ask what the default
+																						// should be
+
 		// Creating correct pageable variable
 		if (page_token != null) {
 			try {
 				Integer.valueOf(page_token);
 			} catch (Exception e) {
-				throw new Exception("Invalid page token");
+				throw new InvalidParameterException("Invalid page token");
 			}
 			pageable = new PageRequest(Integer.valueOf(page_token), pageable.getPageSize());
 		}
 		if (page_size != null) {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
-		
+
 		if (alias != null) {
 			try {
 				ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable.next());
 				return new ListDataBundlesResponse(
-						ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable), String.valueOf(pageable.next().getPageNumber()));
+						ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable),
+						String.valueOf(pageable.next().getPageNumber()));
 			} catch (Exception e) {
 				return new ListDataBundlesResponse(
 						ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable), "0");
 			}
 		}
-		
+
 		try {
 			ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable.next());
-			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable), String.valueOf(pageable.next().getPageNumber()));
+			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable),
+					String.valueOf(pageable.next().getPageNumber()));
 		} catch (Exception e) {
-			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable), "0");
+			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable),
+					"0");
 		}
-		
+
 	}
 
 	// GET Request - returns data bundle by data_bundle_id
