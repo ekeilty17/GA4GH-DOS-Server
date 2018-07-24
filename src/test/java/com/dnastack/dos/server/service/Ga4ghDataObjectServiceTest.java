@@ -117,7 +117,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test(expected = EntityNotFoundException.class)
-	public void getObjectByIdAndAllVersionsTest() throws EntityNotFoundException {
+	public void getObjectByIdAndAllVersionsTest() throws EntityNotFoundException, Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
@@ -174,7 +174,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getAllObjectsWithMostRecentVersionsTest() {
+	public void getAllObjectsWithMostRecentVersionsTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
@@ -205,7 +205,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getAllObjectsAndAllVersionsTest() {
+	public void getAllObjectsAndAllVersionsTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
@@ -234,7 +234,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getObjectsByAliasTest() {
+	public void getObjectsByAliasTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null,
@@ -321,7 +321,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getObjectsByAliasWithMostRecentVersionTest() {
+	public void getObjectsByAliasWithMostRecentVersionTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null,

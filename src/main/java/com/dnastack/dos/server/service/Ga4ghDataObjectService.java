@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +29,15 @@ public class Ga4ghDataObjectService {
 	private Ga4ghURLRepository ga4ghURLRepository;
 
 	// Helper - converts list of DataBundle objects to a paginated list
-	public Page<DataObject> paginateList(List<DataObject> objectList, Pageable pageable) {
+	public Page<DataObject> paginateList(List<DataObject> objectList, Pageable pageable) throws InvalidParameterException {
 		int start = pageable.getOffset();
 		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size()
 				: (start + pageable.getPageSize());
+		
+		if (start >= end) {
+			throw new InvalidParameterException("Page does not exist, page size is too large.");
+		}
+		
 		return new PageImpl<DataObject>(objectList.subList(start, end),
 				new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
 				objectList.size());
@@ -60,7 +66,7 @@ public class Ga4ghDataObjectService {
 	}
 
 	// GET List of Objects by some criteria
-	public Page<DataObject> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException {
+	public Page<DataObject> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException, Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findByIdEquals(id).forEach(o -> objects.add(new DataObject(o)));
 		if (objects.isEmpty()) {
@@ -69,7 +75,7 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataObject> getAllObjectsWithMostRecentVersions(Pageable pageable) {
+	public Page<DataObject> getAllObjectsWithMostRecentVersions(Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> {
 			if (o.isMostRecent() == true) {
@@ -79,7 +85,7 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataObject> getAllObjectsAndAllVersions(Pageable pageable) {
+	public Page<DataObject> getAllObjectsAndAllVersions(Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> objects.add(new DataObject(o)));
 		return paginateList(objects, pageable);
@@ -91,7 +97,7 @@ public class Ga4ghDataObjectService {
 		return objects;
 	}
 
-	public Page<DataObject> getObjectsByAlias(String alias, Pageable pageable) {
+	public Page<DataObject> getObjectsByAlias(String alias, Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> {
 			if (o.getAliases().contains(alias)) {
@@ -101,7 +107,7 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataObject> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) {
+	public Page<DataObject> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> {
 			if (o.isMostRecent() && o.getAliases().contains(alias)) {

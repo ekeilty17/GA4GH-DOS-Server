@@ -47,15 +47,38 @@ public class Ga4ghDataObjectController {
 			@RequestParam(value = "checksum_type", required = false) String checksum_type,
 			@RequestParam(value = "page_size", required = false) Integer page_size,
 			@RequestParam(value = "page_token", required = false) String page_token,
-			@PageableDefault(value = 5, page = 0) Pageable pageable) {
+			@PageableDefault(value = 5, page = 0) Pageable pageable) throws Exception {
+		
+		// Creating correct pageable variable
+		if (page_token != null) {
+			try {
+				Integer.valueOf(page_token);
+			} catch (Exception e) {
+				throw new Exception("Invalid page token");
+			}
+			pageable = new PageRequest(Integer.valueOf(page_token), pageable.getPageSize());
+		}
 		if (page_size != null) {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
+		
 		if (alias != null) {
-			return new ListDataObjectsResponse(
-					ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable));
+			try {
+				ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable.next());
+				return new ListDataObjectsResponse(
+						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable), String.valueOf(pageable.next().getPageNumber()));
+			} catch (Exception e) {
+				return new ListDataObjectsResponse(
+						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable), "0");
+			}
 		}
-		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable));
+		
+		try {
+			ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable.next());
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable), String.valueOf(pageable.next().getPageNumber()));
+		} catch (Exception e) {
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable), "0");
+		}
 	}
 
 	// GET Request - returns specific data object by id
@@ -74,7 +97,7 @@ public class Ga4ghDataObjectController {
 	// GET Request - gets all versions of a data bundle by a data_bundle_id
 	@RequestMapping("/dataobject/{data_object_id}/versions")
 	public ListDataObjectsResponse getDataObjectVersions(@PathVariable String data_object_id,
-			@PageableDefault(value = 10, page = 0) Pageable pageable) throws EntityNotFoundException {
+			@PageableDefault(value = 10, page = 0) Pageable pageable) throws EntityNotFoundException, Exception {
 		return new ListDataObjectsResponse(
 				ga4ghDataObjectService.getObjectByIdAndAllVersions(data_object_id, pageable));
 	}
@@ -124,7 +147,7 @@ public class Ga4ghDataObjectController {
 	// GET Request - temporary - gets all data objects and all their versions
 	@RequestMapping("/dataobjects/allVersions")
 	public ListDataObjectsResponse getAllDataBundlesAndAllVersions(
-			@PageableDefault(value = 10, page = 0) Pageable pageable) {
+			@PageableDefault(value = 10, page = 0) Pageable pageable) throws Exception {
 		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsAndAllVersions(pageable));
 	}
 

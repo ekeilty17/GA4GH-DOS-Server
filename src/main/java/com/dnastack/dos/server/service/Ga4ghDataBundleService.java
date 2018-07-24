@@ -12,8 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +29,15 @@ public class Ga4ghDataBundleService {
 	private Ga4ghDataBundleRepository ga4ghDataBundleRepository;
 
 	// Helper - converts list of DataBundle objects to a paginated list
-	public Page<DataBundle> paginateList(List<DataBundle> objectList, Pageable pageable) {
+	public Page<DataBundle> paginateList(List<DataBundle> objectList, Pageable pageable) throws InvalidParameterException {
 		int start = pageable.getOffset();
 		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size()
 				: (start + pageable.getPageSize());
+		
+		if (start >= end) {
+			throw new InvalidParameterException("Page does not exist, page size is too large.");
+		}
+		
 		return new PageImpl<DataBundle>(objectList.subList(start, end),
 				new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
 				objectList.size());
@@ -59,7 +66,7 @@ public class Ga4ghDataBundleService {
 	}
 
 	// GET List of Objects by some criteria
-	public Page<DataBundle> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException {
+	public Page<DataBundle> getObjectByIdAndAllVersions(String id, Pageable pageable) throws EntityNotFoundException, Exception {
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findByIdEquals(id).forEach(o -> objects.add(new DataBundle(o)));
 		if (objects.isEmpty()) {
@@ -68,7 +75,7 @@ public class Ga4ghDataBundleService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataBundle> getAllObjectsWithMostRecentVersions(Pageable pageable) {
+	public Page<DataBundle> getAllObjectsWithMostRecentVersions(Pageable pageable) throws Exception {
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> {
 			if (o.isMostRecent() == true) {
@@ -78,7 +85,7 @@ public class Ga4ghDataBundleService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataBundle> getAllObjectsAndAllVersions(Pageable pageable) {
+	public Page<DataBundle> getAllObjectsAndAllVersions(Pageable pageable) throws Exception {
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> objects.add(new DataBundle(o)));
 		return paginateList(objects, pageable);
@@ -90,7 +97,7 @@ public class Ga4ghDataBundleService {
 		return objects;
 	}
 
-	public Page<DataBundle> getObjectsByAlias(String alias, Pageable pageable) {
+	public Page<DataBundle> getObjectsByAlias(String alias, Pageable pageable) throws Exception {
 		// TODO I don't really like how I did this for a few reasons, but it works
 		// 1) The query of the database loads every object, which is bad
 		// 2) I'm doing the pagination manually, which is also bad
@@ -110,7 +117,7 @@ public class Ga4ghDataBundleService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataBundle> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) {
+	public Page<DataBundle> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) throws Exception{
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> {
 			if (o.isMostRecent() && o.getAliases().contains(alias)) {

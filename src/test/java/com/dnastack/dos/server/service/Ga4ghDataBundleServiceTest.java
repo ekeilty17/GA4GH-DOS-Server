@@ -111,7 +111,7 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test(expected = EntityNotFoundException.class)
-	public void getObjectByIdAndAllVersionsTest() throws EntityNotFoundException {
+	public void getObjectByIdAndAllVersionsTest() throws EntityNotFoundException, Exception {
 
 		List<Ga4ghDataBundle> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataBundle(false, "1", null, null, null, "1", null, null, null, null, null));
@@ -168,7 +168,7 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test
-	public void getAllObjectsWithMostRecentVersionsTest() {
+	public void getAllObjectsWithMostRecentVersionsTest() throws Exception {
 
 		List<Ga4ghDataBundle> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataBundle(false, "1", null, null, null, "1", null, null, null, null, null));
@@ -199,7 +199,7 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test
-	public void getAllObjectsAndAllVersionsTest() {
+	public void getAllObjectsAndAllVersionsTest() throws Exception {
 
 		List<Ga4ghDataBundle> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataBundle(false, "1", null, null, null, "1", null, null, null, null, null));
@@ -228,7 +228,7 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test
-	public void getObjectsByAliasTest() {
+	public void getObjectsByAliasTest() throws Exception {
 
 		List<Ga4ghDataBundle> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataBundle(false, "1", null, null, null, "1", null, null,
@@ -315,7 +315,7 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test
-	public void getObjectsByAliasWithMostRecentVersionTest() {
+	public void getObjectsByAliasWithMostRecentVersionTest() throws Exception {
 
 		List<Ga4ghDataBundle> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataBundle(false, "1", null, null, null, "1", null, null,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.144" tests="14" errors="0" skipped="0" failures="0">
+<testsuite name="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.156" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/jre/lib"/>
@@ -63,18 +63,18 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="getAllObjectsWithMostRecentVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.044"/>
-  <testcase name="getObjectsByAliasWithMostRecentVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.008"/>
-  <testcase name="getObjectsByAliasTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.007"/>
+  <testcase name="getAllObjectsWithMostRecentVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.047"/>
+  <testcase name="getObjectsByAliasWithMostRecentVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.01"/>
+  <testcase name="getObjectsByAliasTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.01"/>
   <testcase name="repositoryContexLoads" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.004"/>
   <testcase name="deleteObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.028"/>
   <testcase name="updateObjectTest_pass" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.005"/>
-  <testcase name="getObjectByIdAndVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.008"/>
-  <testcase name="updateObjectTest_fail_conflict" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.004"/>
-  <testcase name="getObjectByIdWithMostRecentVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.004"/>
-  <testcase name="updateObjectTest_fail_DNE" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.004"/>
-  <testcase name="getObjectByIdAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.013"/>
-  <testcase name="getAllObjectsAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.006"/>
-  <testcase name="addObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.005"/>
-  <testcase name="deleteAllObjectsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.004"/>
+  <testcase name="getObjectByIdAndVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.009"/>
+  <testcase name="updateObjectTest_fail_conflict" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.005"/>
+  <testcase name="getObjectByIdWithMostRecentVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.008"/>
+  <testcase name="updateObjectTest_fail_DNE" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.006"/>
+  <testcase name="getObjectByIdAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.008"/>
+  <testcase name="getAllObjectsAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.007"/>
+  <testcase name="addObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.006"/>
+  <testcase name="deleteAllObjectsTest" classname="com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest" time="0.003"/>
 </testsuite>
