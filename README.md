@@ -1,65 +1,58 @@
 # GA4GH-DOS-Server
 
-A work in progress. API modeled according to the swagger specification provided by GA4GH located [here](https://ga4gh.github.io/data-object-service-schemas/#/).
-
-## To Run
-
-```
-
-mvn clean spring-boot:run
-
-```
+Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit alliance formed to accelerate the potential of research and medicine to advance human health. They have developed the Data Object Service (DOS), which is an emerging standard for specifying location of data across different cloud environments. This is an implementation of a DOS Server, which hosts and allows the discovery of data objects. The GA4GH specification of the DOS Server API is found [here](https://ga4gh.github.io/data-object-service-schemas/#/).
 
 
 ## Dependency Checklist
 
-* Using Springboot 1.5.15 because 2.x does not have a keycloak adaptor.
+* Using Springboot 1.5.15.
 * Java 1.8. Will not work with Java 10.
-* MYSQL 5.7. Will not work with mysql 8.
-* Keycloak 4.0.0. Unsure about backward compatibility.
-* Running mysql on localhost:3306.
-* Running Keycloak on localhost:8081.
-* localhost:8080 is reserved for the server.
+* MYSQL 5.7. Will not work with MYSQL 8.
+* Keycloak 4.0.0.
 
-### MYSQL Details
+* DOS Server running on localhost:8080.
+* MYSQL running on localhost:3306.
+* Keycloak running on localhost:8081.
+
+## Set Up
+
+### MYSQL Set Up
 
 * Make a user named "dos" with a password "dos"
 * grant all privileges
 * Make a database called "dos"
 
-Go into root user account in MYSQL `mysql -u root -p`, enter root user password, and execute this:
+**Step by Step**
+
+Go into root user account in MYSQL `mysql -u root -p`, enter root user password, and execute:
 
 ```
 CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
 GRANT ALL PRIVILEGES ON * . * TO 'dos'@'localhost';
 CREATE DATABASE dos;
-quit;
 ```
 
 If before quiting you want to check that the user and database was created
 
 ```
 SELECT User FROM mysql.user;
+```
+Should display list of users, one of which should be named "dos"
+
+```
 SHOW DATABASES;
 ```
+Should display list of databases, one of which should be named "dos"
 
-### Keycloak Details
+```
+USE dos;
+SHOW tables;
+```
+Should display `Empty set (0.00 sec)`
 
-* My **Realm** is called _"dos-server"_
-* My **Client** is called _"dos-server-app"_
-* I have a **Role** called _"user"_
-* Under **Users** I have a user called _"testuser"_ assigned to the above **Role**
+### KeyCloak Set Up
 
-I am using Keycloak 4.0.0. By defaul the standalone server runs on port 8080. I changed it to port 8081 by doing the following.
-
-When unzipped, the Keycloak download should produce a directory called "keycloak-4.0.0.Final". Go to 
-`keycloak-4.0.0.Final/standalone/configuration`. Edit the file `standalone.xml`.
-
-line 565 (towards the end of the file) is the following:
-`<socket-binding name="http" port="${jboss.http.port:8080}"/>`
-
-Change it to
-`<socket-binding name="http" port="${jboss.http.port:8081}"/>`
+KeyCloak has not yet been fully integrated.
 
 ### Unit Tests
 
@@ -69,3 +62,15 @@ run
 mvn clean package
 
 ```
+
+## To Run
+
+Once the above has been completed, simply execute:
+
+```
+
+mvn clean spring-boot:run
+
+```
+
+For details on the api topology and how to use to DOS Server, refer to the [GA4GH swaggerhub specification](https://ga4gh.github.io/data-object-service-schemas/#/).
