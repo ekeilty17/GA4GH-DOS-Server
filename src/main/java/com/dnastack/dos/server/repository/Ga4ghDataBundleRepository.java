@@ -10,7 +10,7 @@ public interface Ga4ghDataBundleRepository extends JpaRepository<Ga4ghDataBundle
 
 	public Ga4ghDataBundle findByIdAndVersion(String id, String version);
 
-	public Ga4ghDataBundle findByIdAndMostRecent(String id, boolean mostRecent);
+	public Ga4ghDataBundle findByIdAndHighest(String id, boolean highest);
 
 	public List<Ga4ghDataBundle> findByIdEquals(String id);
 

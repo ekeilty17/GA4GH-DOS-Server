@@ -67,23 +67,22 @@ public class Ga4ghDataBundleController {
 
 		if (alias != null) {
 			try {
-				ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable.next());
+				ga4ghDataBundleService.getObjectsByAliasWithHighestVersion(alias, pageable.next());
 				return new ListDataBundlesResponse(
-						ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable),
+						ga4ghDataBundleService.getObjectsByAliasWithHighestVersion(alias, pageable),
 						String.valueOf(pageable.next().getPageNumber()));
 			} catch (Exception e) {
 				return new ListDataBundlesResponse(
-						ga4ghDataBundleService.getObjectsByAliasWithMostRecentVersion(alias, pageable), "0");
+						ga4ghDataBundleService.getObjectsByAliasWithHighestVersion(alias, pageable), "0");
 			}
 		}
 
 		try {
-			ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable.next());
-			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable),
+			ga4ghDataBundleService.getAllObjectsWithHighestVersions(pageable.next());
+			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithHighestVersions(pageable),
 					String.valueOf(pageable.next().getPageNumber()));
 		} catch (Exception e) {
-			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithMostRecentVersions(pageable),
-					"0");
+			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithHighestVersions(pageable), "0");
 		}
 
 	}
@@ -97,7 +96,7 @@ public class Ga4ghDataBundleController {
 					new DataBundle(ga4ghDataBundleService.getObjectByIdAndVersion(data_bundle_id, version)));
 		} else {
 			return new GetDataBundleResponse(
-					new DataBundle(ga4ghDataBundleService.getObjectByIdWithMostRecentVersion(data_bundle_id)));
+					new DataBundle(ga4ghDataBundleService.getObjectByIdWithHighestVersion(data_bundle_id)));
 		}
 	}
 

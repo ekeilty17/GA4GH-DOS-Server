@@ -35,37 +35,40 @@ public class Ga4ghDataObjectService {
 		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size()
 				: (start + pageable.getPageSize());
 
-		if (start >= end) {
-			throw new InvalidParameterException("Page does not exist, page size is too large.");
+		if (!(objectList.isEmpty() && pageable.getPageNumber() == 0)) {
+			if (start >= end) {
+				throw new InvalidParameterException("Page does not exist, page number is too large.");
+			}
 		}
 
 		return new PageImpl<DataObject>(objectList.subList(start, end),
 				new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
 				objectList.size());
 	}
-	
+
 	// Helper - compare version Strings of the form x.x.x
 	public boolean isVersionCorrectForm(String v) {
 		return v.matches("\\d+|\\d+(\\.\\d+)|\\d+(\\.\\d+(\\.\\d+))");
 	}
+
 	public boolean isFirstVersionGreaterOrEqual(String v1, String v2) throws InvalidParameterException {
-		
+
 		if (!isVersionCorrectForm(v1) || !isVersionCorrectForm(v2)) {
 			throw new InvalidParameterException("Invalid version form. Version numbers must be of the form x.x.x");
 		}
-		
+
 		String[] v1Parts = v1.split("\\.");
 		String[] v2Parts = v2.split("\\.");
-		 
+
 		int length = Math.max(v1Parts.length, v2Parts.length);
-		for(int i = 0; i < length; i++) {
-		    int v1Part = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
-		    int v2Part = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
-		    
-		    if (v1Part < v2Part)
-		        return false;
-		    if (v1Part > v2Part)
-		        return true;
+		for (int i = 0; i < length; i++) {
+			int v1Part = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+			int v2Part = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+
+			if (v1Part < v2Part)
+				return false;
+			if (v1Part > v2Part)
+				return true;
 		}
 		return true;
 	}
@@ -79,10 +82,10 @@ public class Ga4ghDataObjectService {
 		return ga4gh;
 	}
 
-	public Ga4ghDataObject getObjectByIdWithMostRecentVersion(String id) throws EntityNotFoundException {
+	public Ga4ghDataObject getObjectByIdWithHighestVersion(String id) throws EntityNotFoundException {
 		List<Ga4ghDataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findByIdEquals(id).forEach(o -> {
-			if (o.isMostRecent() == true) {
+			if (o.isHighest() == true) {
 				objects.add(o);
 			}
 		});
@@ -103,10 +106,10 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataObject> getAllObjectsWithMostRecentVersions(Pageable pageable) throws Exception {
+	public Page<DataObject> getAllObjectsWithHighestVersions(Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> {
-			if (o.isMostRecent() == true) {
+			if (o.isHighest() == true) {
 				objects.add(new DataObject(o));
 			}
 		});
@@ -135,10 +138,10 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	public Page<DataObject> getObjectsByAliasWithMostRecentVersion(String alias, Pageable pageable) throws Exception {
+	public Page<DataObject> getObjectsByAliasWithHighestVersion(String alias, Pageable pageable) throws Exception {
 		List<DataObject> objects = new ArrayList<>();
 		ga4ghDataObjectRepository.findAll().forEach(o -> {
-			if (o.isMostRecent() && o.getAliases().contains(alias)) {
+			if (o.isHighest() && o.getAliases().contains(alias)) {
 				objects.add(new DataObject(o));
 			}
 		});
@@ -187,17 +190,17 @@ public class Ga4ghDataObjectService {
 			// Deleting objects with old id
 			deleteObject(data_object_id);
 		} else {
-			// Updating mostRecent variable
-			Ga4ghDataObject ga4ghMostRecent = ga4ghDataObjectRepository.findByIdAndMostRecent(object.getId(), true);
-			
+			// Updating 'highest' variable
+			Ga4ghDataObject ga4ghHighest = ga4ghDataObjectRepository.findByIdAndHighest(object.getId(), true);
+
 			// Comparing version numbers and setting correct object to highest version
-			if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghMostRecent.getVersion())) {
-				ga4ghMostRecent.setMostRecent(false);
+			if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghHighest.getVersion())) {
+				ga4ghHighest.setHighest(false);
 			} else {
-				object.setMostRecent(false);
+				object.setHighest(false);
 			}
-			
-			ga4ghDataObjectRepository.save(ga4ghMostRecent);
+
+			ga4ghDataObjectRepository.save(ga4ghHighest);
 		}
 
 		// Saving new objects

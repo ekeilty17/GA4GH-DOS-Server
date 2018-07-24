@@ -65,23 +65,22 @@ public class Ga4ghDataObjectController {
 
 		if (alias != null) {
 			try {
-				ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable.next());
+				ga4ghDataObjectService.getObjectsByAliasWithHighestVersion(alias, pageable.next());
 				return new ListDataObjectsResponse(
-						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable),
+						ga4ghDataObjectService.getObjectsByAliasWithHighestVersion(alias, pageable),
 						String.valueOf(pageable.next().getPageNumber()));
 			} catch (Exception e) {
 				return new ListDataObjectsResponse(
-						ga4ghDataObjectService.getObjectsByAliasWithMostRecentVersion(alias, pageable), "0");
+						ga4ghDataObjectService.getObjectsByAliasWithHighestVersion(alias, pageable), "0");
 			}
 		}
 
 		try {
-			ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable.next());
-			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable),
+			ga4ghDataObjectService.getAllObjectsWithHighestVersions(pageable.next());
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithHighestVersions(pageable),
 					String.valueOf(pageable.next().getPageNumber()));
 		} catch (Exception e) {
-			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithMostRecentVersions(pageable),
-					"0");
+			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithHighestVersions(pageable), "0");
 		}
 	}
 
@@ -94,7 +93,7 @@ public class Ga4ghDataObjectController {
 					new DataObject(ga4ghDataObjectService.getObjectByIdAndVersion(data_object_id, version)));
 		} else {
 			return new GetDataObjectResponse(
-					new DataObject(ga4ghDataObjectService.getObjectByIdWithMostRecentVersion(data_object_id)));
+					new DataObject(ga4ghDataObjectService.getObjectByIdWithHighestVersion(data_object_id)));
 		}
 	}
 

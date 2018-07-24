@@ -10,7 +10,7 @@ public interface Ga4ghDataObjectRepository extends JpaRepository<Ga4ghDataObject
 
 	public Ga4ghDataObject findByIdAndVersion(String id, String version);
 
-	public Ga4ghDataObject findByIdAndMostRecent(String id, boolean mostRecent);
+	public Ga4ghDataObject findByIdAndHighest(String id, boolean highest);
 
 	public List<Ga4ghDataObject> findByIdEquals(String id);
 

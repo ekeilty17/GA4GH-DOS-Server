@@ -93,7 +93,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test(expected = EntityNotFoundException.class)
-	public void getObjectByIdWithMostRecentVersionTest() throws EntityNotFoundException {
+	public void getObjectByIdWithHighestVersionTest() throws EntityNotFoundException {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
@@ -105,14 +105,14 @@ public class Ga4ghDataObjectServiceTest {
 		when(mockRepository.findByIdEquals("2")).thenReturn(new ArrayList<>());
 
 		// Valid result: id == 1
-		Ga4ghDataObject result = mockService.getObjectByIdWithMostRecentVersion("1");
+		Ga4ghDataObject result = mockService.getObjectByIdWithHighestVersion("1");
 		assertThat("result", result, is(sameInstance(testList.get(2))));
 
 		// Verify the correct Repository method was called
 		verify(mockRepository).findByIdEquals("1");
 
 		// Invalid result: id == 2
-		mockService.getObjectByIdWithMostRecentVersion("2");
+		mockService.getObjectByIdWithHighestVersion("2");
 
 	}
 	
@@ -174,7 +174,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getAllObjectsWithMostRecentVersionsTest() throws Exception {
+	public void getAllObjectsWithHighestVersionsTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
@@ -196,7 +196,7 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(5)));
 		Page<DataObject> expectedList = mockService.paginateList(subList, pageable);
 
-		Page<DataObject> resultList = mockService.getAllObjectsWithMostRecentVersions(pageable);
+		Page<DataObject> resultList = mockService.getAllObjectsWithHighestVersions(pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Verify the correct Repository method was called
@@ -321,7 +321,7 @@ public class Ga4ghDataObjectServiceTest {
 	}
 	
 	@Test
-	public void getObjectsByAliasWithMostRecentVersionTest() throws Exception {
+	public void getObjectsByAliasWithHighestVersionTest() throws Exception {
 
 		List<Ga4ghDataObject> testList = new ArrayList<>();
 		testList.add(new Ga4ghDataObject(false, "1", null, null, null, null, "1", null, null, new ArrayList<>(), null,
@@ -348,14 +348,14 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(5)));
 		Page<DataObject> expectedList = mockService.paginateList(subList, pageable);
 
-		Page<DataObject> resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 1", pageable);
+		Page<DataObject> resultList = mockService.getObjectsByAliasWithHighestVersion("alias 1", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "alias 2"
 		subList = new ArrayList<>();
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 2", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("alias 2", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "alias 10"
@@ -363,7 +363,7 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(2)));
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 10", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("alias 10", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "alias 20"
@@ -371,7 +371,7 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(2)));
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 20", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("alias 20", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "alias 3"
@@ -379,7 +379,7 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(3)));
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 3", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("alias 3", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "alias 4"
@@ -387,14 +387,14 @@ public class Ga4ghDataObjectServiceTest {
 		subList.add(new DataObject(testList.get(5)));
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("alias 4", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("alias 4", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Valid result: alias = "none"
 		subList = new ArrayList<>();
 		expectedList = mockService.paginateList(subList, pageable);
 
-		resultList = mockService.getObjectsByAliasWithMostRecentVersion("none", pageable);
+		resultList = mockService.getObjectsByAliasWithHighestVersion("none", pageable);
 		Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedList, resultList));
 
 		// Verify the correct Repository method was called
@@ -439,9 +439,9 @@ public class Ga4ghDataObjectServiceTest {
 				.thenReturn(Arrays.asList(testList.get(0), testList.get(1), testList.get(2)));
 		when(mockRepository.findByIdEquals("3")).thenReturn(Arrays.asList(testList.get(3)));
 
-		when(mockRepository.findByIdAndMostRecent("1", true)).thenReturn(testList.get(2));
-		when(mockRepository.findByIdAndMostRecent("2", true)).thenReturn(null);
-		when(mockRepository.findByIdAndMostRecent("3", true)).thenReturn(testList.get(3));
+		when(mockRepository.findByIdAndHighest("1", true)).thenReturn(testList.get(2));
+		when(mockRepository.findByIdAndHighest("2", true)).thenReturn(null);
+		when(mockRepository.findByIdAndHighest("3", true)).thenReturn(testList.get(3));
 
 		// Valid result: updating content of a version
 		Ga4ghDataObject testObject = new Ga4ghDataObject();
@@ -450,7 +450,7 @@ public class Ga4ghDataObjectServiceTest {
 		testObject.setDescription("description");
 		mockService.updateObject("1", testObject);
 		/*
-		 * .findByIdEquals("1") times called == 1 .findByIdAndMostRecent("1", true)
+		 * .findByIdEquals("1") times called == 1 .findByIdAndHighest("1", true)
 		 * times called == 1 .save(testObject) times called == 1
 		 */
 		
@@ -458,7 +458,7 @@ public class Ga4ghDataObjectServiceTest {
 		testObject.setVersion("4");
 		mockService.updateObject("1", testObject);
 		/*
-		 * .findByIdEquals("1") times called == 1 .findByIdAndMostRecent("1", true)
+		 * .findByIdEquals("1") times called == 1 .findByIdAndHighest("1", true)
 		 * times called == 1 .save(testObject) times called == 1
 		 */
 
@@ -470,7 +470,7 @@ public class Ga4ghDataObjectServiceTest {
 		
 		// Verify the correct Repository method was called
 		verify(mockRepository, times(2)).findByIdEquals("1");
-		verify(mockRepository, times(2)).findByIdAndMostRecent("1", true);
+		verify(mockRepository, times(2)).findByIdAndHighest("1", true);
 		verify(mockRepository, times(2)).save(testObject);
 		
 	}
@@ -503,7 +503,7 @@ public class Ga4ghDataObjectServiceTest {
 		testList.add(new Ga4ghDataObject(true, "3", null, null, null, null, "1", null, null, new ArrayList<>(), null, null));
 
 		// Mocking the Repository behavior
-		when(mockRepository.findByIdAndMostRecent("3", true)).thenReturn(testList.get(3));
+		when(mockRepository.findByIdAndHighest("3", true)).thenReturn(testList.get(3));
 
 		// Invalid result: changing all objects with id == 1 to id == 3 would cause
 		// conflict with other objects in database

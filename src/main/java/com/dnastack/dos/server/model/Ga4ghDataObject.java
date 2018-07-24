@@ -28,7 +28,7 @@ public class Ga4ghDataObject {
 	@NotNull
 	private String versionId;
 
-	private boolean mostRecent;
+	private boolean highest;
 
 	@NotNull
 	private String id;
@@ -72,12 +72,12 @@ public class Ga4ghDataObject {
 
 	}
 
-	// Missing: versionId, mostRecent
+	// Missing: versionId, highest
 	public Ga4ghDataObject(String id, String name, String size, String created, String updated, String version,
 			String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls, String description, List<String> aliases) {
 		super();
 		this.versionId = id + 'v' + version;
-		this.mostRecent = true;
+		this.highest = true;
 		this.id = id;
 		this.name = name;
 		this.size = size;
@@ -92,12 +92,12 @@ public class Ga4ghDataObject {
 	}
 
 	// Missing: versionId
-	public Ga4ghDataObject(boolean mostRecent, String id, String name, String size, String created, String updated,
+	public Ga4ghDataObject(boolean highest, String id, String name, String size, String created, String updated,
 			String version, String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls, String description,
 			List<String> aliases) {
 		super();
 		this.versionId = id + 'v' + version;
-		this.mostRecent = mostRecent;
+		this.highest = highest;
 		this.id = id;
 		this.name = name;
 		this.size = size;
@@ -111,12 +111,12 @@ public class Ga4ghDataObject {
 		this.aliases = aliases;
 	}
 
-	public Ga4ghDataObject(String versionId, boolean mostRecent, String id, String name, String size, String created,
+	public Ga4ghDataObject(String versionId, boolean highest, String id, String name, String size, String created,
 			String updated, String version, String mimeType, List<Checksum> checksums, List<Ga4ghURL> urls,
 			String description, List<String> aliases) {
 		super();
 		this.versionId = versionId;
-		this.mostRecent = mostRecent;
+		this.highest = highest;
 		this.id = id;
 		this.name = name;
 		this.size = size;
@@ -133,7 +133,7 @@ public class Ga4ghDataObject {
 	public Ga4ghDataObject(DataObject dataObject) {
 		super();
 		this.versionId = dataObject.getId() + 'v' + dataObject.getVersion();
-		this.mostRecent = true;
+		this.highest = true;
 		this.id = dataObject.getId();
 		this.name = dataObject.getName();
 		this.size = dataObject.getSize();

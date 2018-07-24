@@ -33,7 +33,7 @@ public class Ga4ghDataBundle {
 	@NotNull
 	private String versionId;
 
-	private boolean mostRecent;
+	private boolean highest;
 
 	@NotNull
 	private String id;
@@ -88,13 +88,13 @@ public class Ga4ghDataBundle {
 
 	}
 
-	// Missing: versionId, mostRecent
+	// Missing: versionId, highest
 	public Ga4ghDataBundle(String id, List<String> data_object_ids, String created, String updated, String version,
 			List<Checksum> checksums, String description, List<String> aliases, Map<String, String> system_metadata,
 			Map<String, String> user_metadata) {
 		super();
 		this.versionId = id + 'v' + version;
-		this.mostRecent = true;
+		this.highest = true;
 		this.id = id;
 		this.data_object_ids = data_object_ids;
 		this.created = created;
@@ -108,12 +108,12 @@ public class Ga4ghDataBundle {
 	}
 
 	// Missing: versionId
-	public Ga4ghDataBundle(boolean mostRecent, String id, List<String> data_object_ids, String created, String updated,
+	public Ga4ghDataBundle(boolean highest, String id, List<String> data_object_ids, String created, String updated,
 			String version, List<Checksum> checksums, String description, List<String> aliases,
 			Map<String, String> system_metadata, Map<String, String> user_metadata) {
 		super();
 		this.versionId = id + 'v' + version;
-		this.mostRecent = mostRecent;
+		this.highest = highest;
 		this.id = id;
 		this.data_object_ids = data_object_ids;
 		this.created = created;
@@ -126,12 +126,12 @@ public class Ga4ghDataBundle {
 		this.user_metadata = user_metadata;
 	}
 
-	public Ga4ghDataBundle(String versionId, boolean mostRecent, String id, List<String> data_object_ids,
-			String created, String updated, String version, List<Checksum> checksums, String description,
-			List<String> aliases, Map<String, String> system_metadata, Map<String, String> user_metadata) {
+	public Ga4ghDataBundle(String versionId, boolean highest, String id, List<String> data_object_ids, String created,
+			String updated, String version, List<Checksum> checksums, String description, List<String> aliases,
+			Map<String, String> system_metadata, Map<String, String> user_metadata) {
 		super();
 		this.versionId = versionId;
-		this.mostRecent = mostRecent;
+		this.highest = highest;
 		this.id = id;
 		this.data_object_ids = data_object_ids;
 		this.created = created;
@@ -147,7 +147,7 @@ public class Ga4ghDataBundle {
 	public Ga4ghDataBundle(DataBundle dataBundle) {
 		super();
 		this.versionId = dataBundle.getId() + 'v' + dataBundle.getVersion();
-		this.mostRecent = true;
+		this.highest = true;
 		this.id = dataBundle.getId();
 		this.data_object_ids = new ArrayList<>(dataBundle.getData_object_ids());
 		this.created = dataBundle.getCreated();

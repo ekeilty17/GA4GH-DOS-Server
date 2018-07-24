@@ -16,6 +16,7 @@ com/dnastack/dos/server/response/CreateDataObjectResponse.class
 com/dnastack/dos/server/controller/Ga4ghDataObjectController.class
 com/dnastack/dos/server/repository/Ga4ghURLRepository.class
 com/dnastack/dos/server/response/CreateDataBundleResponse.class
+com/dnastack/dos/server/response/ServiceInfoResponse.class
 com/dnastack/dos/server/response/GetDataBundleResponse$GetDataBundleResponseBuilder.class
 com/dnastack/dos/server/model/Ga4ghDataObject.class
 com/dnastack/dos/server/model/URL.class
