@@ -11,15 +11,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.After;
@@ -28,12 +30,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,8 +57,10 @@ public class Ga4ghDataBundleServiceTest {
 	}
 
 	@Test
-	public void daoContexLoads() {
+	public void repositoryContexLoads() {
+		
 		assertNotNull(mockRepository);
+		
 	}
 
 	@Test(expected = EntityNotFoundException.class)
