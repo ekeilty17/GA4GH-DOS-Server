@@ -189,21 +189,22 @@ public class Ga4ghDataObjectService {
 
 			// Deleting objects with old id
 			deleteObject(data_object_id);
-		} else {
-			// Updating 'highest' variable
-			Ga4ghDataObject ga4ghHighest = ga4ghDataObjectRepository.findByIdAndHighest(object.getId(), true);
-
-			// Comparing version numbers and setting correct object to highest version
-			if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghHighest.getVersion())) {
-				ga4ghHighest.setHighest(false);
-			} else {
-				object.setHighest(false);
-			}
-
-			ga4ghDataObjectRepository.save(ga4ghHighest);
 		}
+		
+		// Updating 'highest' variable
+		Ga4ghDataObject ga4ghHighest = ga4ghDataObjectRepository.findByIdAndHighest(object.getId(), true);
 
-		// Saving new objects
+		// Comparing version numbers and setting correct object to highest version
+		if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghHighest.getVersion())) {
+			ga4ghHighest.setHighest(false);
+		} else {
+			object.setHighest(false);
+		}
+		
+		// Updating previously (and possibly still currently) highest version object
+		ga4ghDataObjectRepository.save(ga4ghHighest);
+
+		// Saving new object
 		ga4ghDataObjectRepository.save(object);
 	}
 

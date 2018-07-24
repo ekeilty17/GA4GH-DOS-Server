@@ -187,27 +187,29 @@ public class Ga4ghDataBundleService {
 			}
 
 			// Updating id of all versions of the data bundle
-			objects_DataBundleId.forEach(o -> ga4ghDataBundleRepository.save(new Ga4ghDataBundle(false, object.getId(),
+			objects_DataBundleId.forEach(o -> ga4ghDataBundleRepository.save(new Ga4ghDataBundle(o.isHighest(), object.getId(),
 					new ArrayList<>(o.getData_object_ids()), o.getCreated(), o.getUpdated(), o.getVersion(),
 					new ArrayList<>(o.getChecksums()), o.getDescription(), new ArrayList<>(o.getAliases()),
 					new HashMap<>(o.getSystem_metadata()), new HashMap<>(o.getUser_metadata()))));
+			
 			// Deleting objects with old id
 			deleteObject(data_bundle_id);
-		} else {
-			// Updating 'highest' variable
-			Ga4ghDataBundle ga4ghHighest = ga4ghDataBundleRepository.findByIdAndHighest(object.getId(), true);
-
-			// Comparing version numbers and setting correct object to highest version
-			if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghHighest.getVersion())) {
-				ga4ghHighest.setHighest(false);
-			} else {
-				object.setHighest(false);
-			}
-
-			ga4ghDataBundleRepository.save(ga4ghHighest);
 		}
+		
+		// Updating 'highest' variable
+		Ga4ghDataBundle ga4ghHighest = ga4ghDataBundleRepository.findByIdAndHighest(object.getId(), true);
 
-		// Saving new objects
+		// Comparing version numbers and setting correct object to highest version
+		if (isFirstVersionGreaterOrEqual(object.getVersion(), ga4ghHighest.getVersion())) {
+			ga4ghHighest.setHighest(false);
+		} else {
+			object.setHighest(false);
+		}
+		
+		// Updating previously (and possibly still currently) highest version object
+		ga4ghDataBundleRepository.save(ga4ghHighest);
+
+		// Saving new object
 		ga4ghDataBundleRepository.save(object);
 
 	}
