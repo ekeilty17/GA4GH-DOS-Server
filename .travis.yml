@@ -6,7 +6,6 @@ jdk:
 branches:
   only:
     - master
-    - develop
 
 script:
   - mvn test
