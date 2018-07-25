@@ -7,11 +7,11 @@ branches:
   only:
     - master
 
-services:
-  - mysql
+#services:
+#  - mysql
 
-before_install:
-  - mysql -u dos --password=dos
+#before_install:
+#  - mysql -u dos --password=dos
 
 script:
   - mvn test
