@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.088" tests="14" errors="0" skipped="0" failures="0">
+<testsuite name="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.09" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/jre/lib"/>
@@ -65,16 +65,16 @@
   </properties>
   <testcase name="getObjectsByAliasTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.009"/>
   <testcase name="repositoryContexLoads" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.004"/>
-  <testcase name="deleteObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.018"/>
+  <testcase name="deleteObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.008"/>
   <testcase name="updateObjectTest_pass" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
   <testcase name="getObjectByIdAndVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.004"/>
-  <testcase name="updateObjectTest_fail_conflict" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.005"/>
+  <testcase name="updateObjectTest_fail_conflict" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
   <testcase name="updateObjectTest_fail_DNE" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.005"/>
-  <testcase name="getObjectsByAliasWithHighestVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
+  <testcase name="getObjectsByAliasWithHighestVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.01"/>
   <testcase name="getObjectByIdAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
   <testcase name="getAllObjectsAndAllVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
-  <testcase name="getAllObjectsWithHighestVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.004"/>
-  <testcase name="addObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.005"/>
-  <testcase name="getObjectByIdWithHighestVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
-  <testcase name="deleteAllObjectsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.004"/>
+  <testcase name="getAllObjectsWithHighestVersionsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
+  <testcase name="addObjectTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.006"/>
+  <testcase name="getObjectByIdWithHighestVersionTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.009"/>
+  <testcase name="deleteAllObjectsTest" classname="com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest" time="0.005"/>
 </testsuite>
