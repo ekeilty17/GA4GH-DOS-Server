@@ -9,4 +9,4 @@ branches:
     - develop
 
 script:
-  - mvn test
+  - mvn test -P test-managed
