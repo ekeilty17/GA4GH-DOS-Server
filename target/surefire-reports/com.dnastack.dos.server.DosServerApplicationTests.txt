@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.dnastack.dos.server.DosServerApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.269 sec - in com.dnastack.dos.server.DosServerApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.678 sec - in com.dnastack.dos.server.DosServerApplicationTests

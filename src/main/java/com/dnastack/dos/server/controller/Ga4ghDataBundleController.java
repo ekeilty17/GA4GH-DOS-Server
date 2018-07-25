@@ -49,8 +49,7 @@ public class Ga4ghDataBundleController {
 																							// should do
 			@RequestParam(value = "page_size", required = false) Integer page_size,
 			@RequestParam(value = "page_token", required = false) String page_token,
-			@PageableDefault(value = 5, page = 0) Pageable pageable) throws Exception { // TODO ask what the default
-																						// should be
+			@PageableDefault(value = 10, page = 0) Pageable pageable) throws Exception {
 
 		// Creating correct pageable variable
 		if (page_token != null) {

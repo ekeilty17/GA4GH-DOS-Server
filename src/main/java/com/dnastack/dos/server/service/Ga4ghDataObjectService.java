@@ -176,7 +176,6 @@ public class Ga4ghDataObjectService {
 			}
 
 			// Updating id of all versions of the data object
-			// FIXME contents of url does not get copied
 			objects_DataObjectId.forEach(o -> {
 				// Manually copying URLs
 				List<Ga4ghURL> urls = new ArrayList<>();

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest
 -------------------------------------------------------------------------------
-Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.173 sec - in com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.15 sec - in com.dnastack.dos.server.service.Ga4ghDataObjectServiceTest

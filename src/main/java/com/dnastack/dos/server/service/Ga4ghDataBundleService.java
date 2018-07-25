@@ -129,16 +129,6 @@ public class Ga4ghDataBundleService {
 	}
 
 	public Page<DataBundle> getObjectsByAlias(String alias, Pageable pageable) throws Exception {
-		// TODO I don't really like how I did this for a few reasons, but it works
-		// 1) The query of the database loads every object, which is bad
-		// 2) I'm doing the pagination manually, which is also bad
-		// Idea:
-		// Use the Ga4ghDataBundleRepository to make a custom database query to just get
-		// a list of Ga4ghDataBundles
-		// Then do the manual pagination to that list
-		// You can't set nativeQuery = True if you want the Repo to return
-		// Page<Ga4ghDataBundle>
-		// So this is the best solution I can think of
 		List<DataBundle> objects = new ArrayList<>();
 		ga4ghDataBundleRepository.findAll().forEach(o -> {
 			if (o.getAliases().contains(alias)) {
@@ -173,7 +163,7 @@ public class Ga4ghDataBundleService {
 
 	// PUT
 	public void updateObject(String data_bundle_id, Ga4ghDataBundle object) throws EntityNotFoundException, Exception {
-		// TODO can turn findByIdEquals into a boolean
+		// TODO can turn findByIdEquals into a boolean function, might make things cleaner
 		List<Ga4ghDataBundle> objects_DataBundleId = ga4ghDataBundleRepository.findByIdEquals(data_bundle_id);
 		if (objects_DataBundleId.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "data_bundle_id", data_bundle_id);

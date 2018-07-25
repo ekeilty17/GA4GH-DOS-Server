@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest
 -------------------------------------------------------------------------------
-Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.381 sec - in com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.471 sec - in com.dnastack.dos.server.service.Ga4ghDataBundleServiceTest
