@@ -30,7 +30,7 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
 
 **Step by Step**
 
-Go into root user account in MYSQL `mysql -u root -p`, enter root user password, and execute:
+Go into root user account in MYSQL `$ mysql -u root -p`, enter root user password, and execute:
 
 ```
 CREATE USER 'dos'@'localhost' IDENTIFIED BY '';
@@ -64,7 +64,7 @@ KeyCloak has not yet been fully integrated.
 
 ```
 
-mvn test
+$ mvn test
 
 ```
 
@@ -82,7 +82,7 @@ Once the above has been completed, simply execute:
 
 ```
 
-mvn clean spring-boot:run
+$ mvn clean spring-boot:run
 
 ```
 
