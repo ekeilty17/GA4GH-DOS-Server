@@ -11,9 +11,9 @@ services:
   - mysql
 
 before_install:
-  - mysql -u travis -e 'CREATE DATABASE dos;'
-  - mysql -u travis -e "CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';"
-  - mysql -u travis -e "GRANT ALL PRIVILEGES ON * . * TO 'dos'@'localhost';"
+  - mysql -u root -e 'CREATE DATABASE dos;'
+  - mysql -u root -e "CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';"
+  - mysql -u root -e "GRANT ALL ON stockmarket.* TO 'makler'@'localhost';"
   
 
 script:
