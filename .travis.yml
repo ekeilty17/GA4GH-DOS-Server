@@ -7,11 +7,14 @@ branches:
   only:
     - master
 
-#services:
-#  - mysql
+services:
+  - mysql
 
-#before_install:
-#  - mysql -u dos --password=dos
+before_install:
+  - mysql -u travis -e 'CREATE DATABASE dos;'
+  - mysql -u travis -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '';"
+  - mysql -u travis -e "GRANT ALL ON dos.* TO 'travis'@'localhost';"
+  
 
 script:
   - mvn test
