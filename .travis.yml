@@ -13,7 +13,7 @@ services:
 before_install:
   - mysql -u root -e 'CREATE DATABASE dos;'
   - mysql -u root -e "CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';"
-  - mysql -u root -e "GRANT ALL ON dos.* TO 'makler'@'localhost';"
+  - mysql -u root -e "GRANT ALL ON dos.* TO 'dos'@'localhost';"
   
 
 script:
