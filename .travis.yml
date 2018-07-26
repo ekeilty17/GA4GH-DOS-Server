@@ -12,8 +12,8 @@ services:
 
 before_install:
   - mysql -u travis -e 'CREATE DATABASE dos;'
-  - mysql -u travis -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '';"
-  - mysql -u travis -e "GRANT ALL ON dos.* TO 'travis'@'localhost';"
+  #- mysql -u travis -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY '';"
+  #- mysql -u travis -e "GRANT ALL ON dos.* TO 'travis'@'localhost';"
   
 
 script:
