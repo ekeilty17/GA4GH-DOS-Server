@@ -33,7 +33,7 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
 Go into root user account in MYSQL `$ mysql -u root -p`, enter root user password, and execute:
 
 ```
-CREATE USER 'dos'@'localhost' IDENTIFIED BY '';
+CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
 GRANT ALL PRIVILEGES ON dos . * TO 'dos'@'localhost';
 CREATE DATABASE dos;
 ```
