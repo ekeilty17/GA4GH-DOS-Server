@@ -68,6 +68,7 @@ Run standalone server on port 8180
 My Keycloak set up
 * My **Realm** is called "dos-server"
 * My **Client** is called "dos-server-app"
+* Under **Client** I changed "Valid Redirect URIs" to "http://localhost:8081/*"
 * I have a **Role** called "user"
 * Under **Users** I have a user called "testuser" assigned to the above **Role**
 
