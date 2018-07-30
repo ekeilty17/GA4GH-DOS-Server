@@ -3,7 +3,7 @@ server:
   
 spring:
   datasource:
-    #TODO add SSL connection
+    # TODO add SSL connection
     url: jdbc:mysql://localhost:3306/dos?useSSL=false
     username: dos
     password: dos
@@ -17,18 +17,19 @@ spring:
 
 keycloak:
   principal-attribute: ekeilty
-  auth-server-url: http://localhost:8081/auth
+  auth-server-url: http://localhost:8180/auth
   realm: dos-server
   resource: dos-server-app
   public-client: true
   
-  security-constraints:
-    - authRoles:
-      - user
-      securityCollections:
-      - patterns:
-        - /databundles/**
-        - /dataobjects/**
+  #security-constraints:
+  #  - authRoles:
+  #    - user
+  #  - securityCollections:
+  #    - patterns:
+  #      - /**
+  #      #- /databundles/**
+  #      #- /dataobjects/**
 
 
 logging:
