@@ -96,6 +96,7 @@ Once the above has been completed, simply execute:
 
 ```
 
+$ mvn clean install
 $ mvn clean spring-boot:run
 
 ```
