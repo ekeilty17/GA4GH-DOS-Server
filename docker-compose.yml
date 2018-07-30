@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  dos-server:
+    image: dos-server-docker
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    networks:
+      - my-networks
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB=db
+      #- KEYCLOAK=keycloak
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    networks:
+      - my-networks
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=dos
+      - MYSQL_PASSWORD=dos
+      - MYSQL_DATABASE=dos
+networks:
+  my-networks:
+    driver: bridge
