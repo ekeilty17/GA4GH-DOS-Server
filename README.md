@@ -58,7 +58,21 @@ Should display `Empty set (0.00 sec)`
 
 ### KeyCloak Set Up
 
-KeyCloak has not yet been fully integrated.
+**Note**: KeyCloak has not yet been fully integrated.
+
+Run standalone server on port 8180
+```
+./standalone.sh -Djboss.socket.binding.port-offset=100
+```
+
+My Keycloak set up
+* My **Realm** is called "dos-server"
+* My **Client** is called "dos-server-app"
+* Under **Client** I changed "Valid Redirect URIs" to "http://localhost:8081/*"
+* I have a **Role** called "user"
+* Under **Users** I have a user called "testuser" assigned to the above **Role**
+* Gave the user "testuser" a password of "testuser" and turned **Temporary Password** off
+
 
 ### Unit Tests
 
