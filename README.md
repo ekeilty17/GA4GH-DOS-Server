@@ -71,6 +71,7 @@ My Keycloak set up
 * Under **Client** I changed "Valid Redirect URIs" to "http://localhost:8081/*"
 * I have a **Role** called "user"
 * Under **Users** I have a user called "testuser" assigned to the above **Role**
+* Gave the user "testuser" a password of "testuser" and turned **Temporary Password** off
 
 
 ### Unit Tests
