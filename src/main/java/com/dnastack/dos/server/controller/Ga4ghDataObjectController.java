@@ -143,7 +143,7 @@ public class Ga4ghDataObjectController {
 	// TEMPORARY METHODS - for debugging purposes
 
 	// GET Request - temporary
-	@RequestMapping("/dataobjects/test")
+	@RequestMapping("/dataobjects/auth")
 	public String Test() {
 		return "If you are seeing this, then you have been authenticated.";
 	}

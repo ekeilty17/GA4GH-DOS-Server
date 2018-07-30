@@ -1,5 +1,6 @@
 server:
   port: 8080
+  contextPath: ${context.path:/}
   
 spring:
   datasource:

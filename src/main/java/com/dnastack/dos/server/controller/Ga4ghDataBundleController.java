@@ -145,7 +145,7 @@ public class Ga4ghDataBundleController {
 	// TEMPORARY METHODS - for debugging purposes
 
 	// GET Request - temporary
-	@RequestMapping("/databundles/test")
+	@RequestMapping("/databundles/auth")
 	public String Test() {
 		return "If you are seeing this, then you have been authenticated.";
 	}
