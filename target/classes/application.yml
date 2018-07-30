@@ -1,6 +1,7 @@
 server:
-  port: 8080
+  port: ${port:8080}
   contextPath: ${context.path:/}
+  
   
 spring:
   datasource:
@@ -16,21 +17,13 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
+
 keycloak:
   principal-attribute: ekeilty
   auth-server-url: http://localhost:8180/auth
   realm: dos-server
   resource: dos-server-app
   public-client: true
-  
-  #security-constraints:
-  #  - authRoles:
-  #    - user
-  #  - securityCollections:
-  #    - patterns:
-  #      - /**
-  #      #- /databundles/**
-  #      #- /dataobjects/**
 
 
 logging:
