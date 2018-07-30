@@ -101,11 +101,13 @@ $ mvn clean spring-boot:run
 
 ```
 
+The DOS Server should be running on http://localhost:8080/
+
 For details on the api topology and how to use to DOS Server, refer to the [GA4GH swaggerhub specification](https://ga4gh.github.io/data-object-service-schemas/#/).
 
-### Special Use-Case
+### Evironment Variabels
 
-One may want to spin up multiple instances of the DOS Server. You can add an arguement to the commandline that will let you specify the root url.
+One can specify the base url of the server using this command
 
 ```
 
@@ -113,4 +115,10 @@ $ mvn clean spring-boot:run -Dcontext.path=/user1
 
 ```
 
-By default, the root url is /, but by specifying different root urls, each users can have his or her own DOS Server.
+One can specify the port of the server using this command
+
+```
+
+$ mvn clean spring-boot:run -Dport=9090
+
+```
