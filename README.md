@@ -58,7 +58,13 @@ Should display `Empty set (0.00 sec)`
 
 ### KeyCloak Set Up
 
-KeyCloak has not yet been fully integrated.
+**Note**: KeyCloak has not yet been fully integrated.
+
+Run standalone server on port 8180
+```
+./standalone.sh -Djboss.socket.binding.port-offset=100
+```
+
 
 ### Unit Tests
 
