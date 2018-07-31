@@ -60,7 +60,7 @@ Should display `Empty set (0.00 sec)`
 
 **Note**: KeyCloak has not yet been fully integrated.
 
-Run standalone server on port 8180
+Run standalone server on **port 8180**
 ```
 ./standalone.sh -Djboss.socket.binding.port-offset=100
 ```
