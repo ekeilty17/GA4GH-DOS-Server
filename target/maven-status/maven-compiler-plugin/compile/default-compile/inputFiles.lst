@@ -19,6 +19,7 @@
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/Ga4ghURL.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/request/UpdateDataObjectRequest.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/controller/GenericController.java
+/Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/config/SecurityConfig.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/URL.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/model/DataBundle.java
 /Users/Standard/WORK/GA4GH-DOS-Server/src/main/java/com/dnastack/dos/server/response/ServiceInfoResponse.java
