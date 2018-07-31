@@ -1,5 +1,5 @@
 server:
-  port: ${port:8080}
+  port: ${PORT:8080}
   contextPath: ${context.path:/}
   
   
@@ -15,7 +15,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
 
 keycloak:
