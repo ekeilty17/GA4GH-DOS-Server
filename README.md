@@ -76,6 +76,12 @@ My Keycloak set up
 
 ### Unit Tests
 
+First, make sure you are running Java 1.8
+```
+$ javac -version
+```
+
+To run the unit tests
 ```
 
 $ mvn test
@@ -115,7 +121,7 @@ $ mvn clean spring-boot:run -Dcontext.path=/user1
 
 ```
 
-One can specify the port of the server using this command
+One can also specify the port of the server using this command
 
 ```
 
