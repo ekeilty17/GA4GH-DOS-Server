@@ -125,6 +125,6 @@ One can also specify the port of the server using this command
 
 ```
 
-$ mvn clean spring-boot:run -Dport=9090
+$ mvn clean spring-boot:run -Dserver.port=9090
 
 ```
