@@ -48,7 +48,7 @@ public class Ga4ghDataObject {
 	@Singular
 	@ElementCollection
 	@Embedded
-	@NotNull // FIXME Validation error when @NotNull is present
+	//@NotNull
 	@Valid
 	private List<Checksum> checksums = new ArrayList<Checksum>();
 

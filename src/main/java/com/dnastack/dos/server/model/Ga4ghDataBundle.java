@@ -56,7 +56,7 @@ public class Ga4ghDataBundle {
 	@Singular
 	@ElementCollection
 	@Embedded
-	@NotNull
+	//@NotNull
 	@Valid
 	private List<Checksum> checksums = new ArrayList<Checksum>();
 
