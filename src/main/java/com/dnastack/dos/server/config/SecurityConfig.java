@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
@@ -17,10 +18,12 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)	// TODO figure out what this does
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+	// Submits the KeycloakAuthenticationProvider to the AuthenticationManager
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -34,6 +37,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		return new KeycloakSpringBootConfigResolver();
 	}
 
+	// Specifies the session authentication strategy
 	@Bean
 	@Override
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
@@ -44,24 +48,14 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
 		
-		http.csrf().disable();
-		http.authorizeRequests()
-			.antMatchers("/noneSecurity")
-			.hasRole("user")
+		http
+			.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/noneSecurity").hasRole("admin")
+			//.antMatchers("/databundles/**").hasAnyRole("admin","user")
+			//.antMatchers("/dataobjects/**").hasRole("admin")
 			.anyRequest()
 			.permitAll();
 		
-		/*
-		http.authorizeRequests()
-			.antMatchers("/databundles/**")
-			.hasRole("user")
-			.anyRequest()
-			.permitAll();
-		http.authorizeRequests()
-			.antMatchers("/dataobjects/**")
-			.hasRole("user")
-			.anyRequest()
-			.permitAll();
-		*/
 	}
 }

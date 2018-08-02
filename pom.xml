@@ -24,6 +24,9 @@
 		<java.version>1.8</java.version>
 		<keycloak.version>3.4.2.Final</keycloak.version>
 		<context.path>${context.path:/}</context.path>
+		<db.database>${db.database:dos}</db.database>
+		<db.username>${db.username:dos}</db.username>
+		<db.password>${db.password:dos}</db.password>
 	</properties>
 
 	<dependencies>

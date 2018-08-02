@@ -41,7 +41,7 @@ public class Ga4ghDataBundle {
 	@Singular
 	@ElementCollection
 	@NotNull
-	private List<String> data_object_ids;
+	private List<String> data_object_ids = new ArrayList<String>();
 	// TODO possibly change all lists to sets...not sure yet
 
 	@NotNull
@@ -58,13 +58,13 @@ public class Ga4ghDataBundle {
 	@Embedded
 	@NotNull
 	@Valid
-	private List<Checksum> checksums = new ArrayList<>();
+	private List<Checksum> checksums = new ArrayList<Checksum>();
 
 	private String description;
 
 	@Singular
 	@ElementCollection
-	private List<String> aliases = new ArrayList<>();
+	private List<String> aliases = new ArrayList<String>();
 
 	// WISH Should be able to handle objects
 	@ElementCollection
@@ -73,13 +73,13 @@ public class Ga4ghDataBundle {
 	// @CollectionTable(name="example_attributes",
 	// joinColumns=@JoinColumn(name="example_id"))
 	@NotNull
-	private Map<String, String> system_metadata = new HashMap<>();
+	private Map<String, String> system_metadata = new HashMap<String, String>();
 
 	@ElementCollection
 	@MapKeyColumn(name = "user_metadata_key")
 	@Column(name = "user_metadata_value")
 	@NotNull
-	private Map<String, String> user_metadata = new HashMap<>();
+	private Map<String, String> user_metadata = new HashMap<String, String>();
 
 	// Custom Constructors
 
@@ -149,15 +149,15 @@ public class Ga4ghDataBundle {
 		this.versionId = dataBundle.getId() + 'v' + dataBundle.getVersion();
 		this.highest = true;
 		this.id = dataBundle.getId();
-		this.data_object_ids = new ArrayList<>(dataBundle.getData_object_ids());
+		this.data_object_ids = new ArrayList<String>(dataBundle.getData_object_ids());
 		this.created = dataBundle.getCreated();
 		this.updated = dataBundle.getUpdated();
 		this.version = dataBundle.getVersion();
-		this.checksums = new ArrayList<>(dataBundle.getChecksums());
+		this.checksums = new ArrayList<Checksum>(dataBundle.getChecksums());
 		this.description = dataBundle.getDescription();
-		this.aliases = new ArrayList<>(dataBundle.getAliases());
-		this.system_metadata = new HashMap<>(dataBundle.getSystem_metadata());
-		this.user_metadata = new HashMap<>(dataBundle.getUser_metadata());
+		this.aliases = new ArrayList<String>(dataBundle.getAliases());
+		this.system_metadata = new HashMap<String,String>(dataBundle.getSystem_metadata());
+		this.user_metadata = new HashMap<String,String>(dataBundle.getUser_metadata());
 	}
 
 }

@@ -6,9 +6,9 @@ server:
 spring:
   datasource:
     # TODO add SSL connection
-    url: jdbc:mysql://localhost:3306/dos?useSSL=false
-    username: dos
-    password: dos
+    url: jdbc:mysql://localhost:3306/${db.database:dos}?useSSL=false
+    username: ${db.username:dos}
+    password: ${db.password:dos}
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,10 +20,15 @@ spring:
 keycloak:
   principal-attribute: ekeilty
   auth-server-url: http://localhost:8180/auth
-  realm: dos-server
+  realm: DNAstack
   resource: dos-server-app
   public-client: true
-
+  #enable-basic-auth: false # basic auth is default true, we dont want that
+  # TODO figure out kwhat these do
+  #public-client: false
+  #bearer-only: true
+  #cors: true
+  #use-resource-role-mappings: false
 
 logging:
   level:

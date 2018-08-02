@@ -50,20 +50,20 @@ public class Ga4ghDataObject {
 	@Embedded
 	@NotNull // FIXME Validation error when @NotNull is present
 	@Valid
-	private List<Checksum> checksums = new ArrayList<>();
+	private List<Checksum> checksums = new ArrayList<Checksum>();
 
 	// TODO look into "join table for mapping collections if you want Cascade
 	// collection"
 	// FIXME urls must have a unique id, which means can't have duplicate urls
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Valid
-	private List<Ga4ghURL> urls = new ArrayList<>();
+	private List<Ga4ghURL> urls = new ArrayList<Ga4ghURL>();
 
 	private String description;
 
 	@Singular
 	@ElementCollection
-	private List<String> aliases = new ArrayList<>();
+	private List<String> aliases = new ArrayList<String>();
 
 	// Custom Constructors
 
@@ -141,8 +141,8 @@ public class Ga4ghDataObject {
 		this.updated = dataObject.getUpdated();
 		this.version = dataObject.getVersion();
 		this.mimeType = dataObject.getMimeType();
-		this.checksums = new ArrayList<>(dataObject.getChecksums());
-		List<Ga4ghURL> urlList = new ArrayList<>();
+		this.checksums = new ArrayList<Checksum>(dataObject.getChecksums());
+		List<Ga4ghURL> urlList = new ArrayList<Ga4ghURL>();
 		dataObject.getUrls().forEach(u -> urlList.add(new Ga4ghURL(u)));
 		this.urls = urlList;
 		this.description = dataObject.getDescription();

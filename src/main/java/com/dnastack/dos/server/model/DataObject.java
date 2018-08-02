@@ -17,10 +17,10 @@ public class DataObject {
 	private String updated;
 	private String version;
 	private String mimeType;
-	private List<Checksum> checksums;
-	private List<URL> urls;
+	private List<Checksum> checksums = new ArrayList<Checksum>();
+	private List<URL> urls = new ArrayList<URL>();
 	private String description;
-	private List<String> aliases;
+	private List<String> aliases = new ArrayList<String>();
 
 	// Custom Constructors
 

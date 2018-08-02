@@ -66,12 +66,13 @@ Run standalone server on **port 8180**
 ```
 
 My Keycloak set up
-* My **Realm** is called "dos-server"
-* My **Client** is called "dos-server-app"
-* Under **Client** I changed "Valid Redirect URIs" to "*"
-* I have a **Role** called "user"
-* Under **Users** I have a user called "testuser" assigned to the above **Role**
-* Gave the user "testuser" a password of "testuser" and turned **Temporary Password** off
+* Create a **Realm** called "DNAstack"
+* Create a **Client** called "dos-server-app"
+* Under **Client** change "Valid Redirect URIs" to "*"
+* Create a **Role** called "user"
+* Create a **Users** called "testuser" with password "testuser" and assign to the **Role** "user"
+* Create a **Role** called "admin"
+* Create a **Users** called "adminuser" with password "adminuser" and assign to the **Role** "admin"
 
 
 ### Unit Tests

@@ -3,6 +3,7 @@ package com.dnastack.dos.server.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -10,8 +11,8 @@ import java.util.Map;
 public class URL {
 
 	private String url;
-	private Map<String, String> system_metadata;
-	private Map<String, String> user_metadata;
+	private Map<String, String> system_metadata = new HashMap<String, String>();
+	private Map<String, String> user_metadata = new HashMap<String, String>();
 
 	// Custom Constructors
 

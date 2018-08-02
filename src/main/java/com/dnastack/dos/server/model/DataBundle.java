@@ -3,6 +3,8 @@ package com.dnastack.dos.server.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +17,11 @@ public class DataBundle {
 	private String created;
 	private String updated;
 	private String version;
-	private List<Checksum> checksums;
+	private List<Checksum> checksums = new ArrayList<Checksum>();
 	private String description;
-	private List<String> aliases;
-	private Map<String, String> system_metadata;
-	private Map<String, String> user_metadata;
+	private List<String> aliases = new ArrayList<String>();
+	private Map<String, String> system_metadata = new HashMap<String, String>();
+	private Map<String, String> user_metadata = new HashMap<String, String>();
 
 	// Custom Constructors
 
