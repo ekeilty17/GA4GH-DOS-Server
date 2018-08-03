@@ -36,28 +36,28 @@ This project was developed as part of Google Summer of Code 2018.
 Go into root user account in MYSQL `$ mysql -u root -p`, enter root user password, and execute:
 
 ```
-CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
-CREATE DATABASE dos;
-GRANT ALL PRIVILEGES ON dos.* TO 'dos'@'localhost';
+> CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
+> CREATE DATABASE dos;
+> GRANT ALL PRIVILEGES ON dos.* TO 'dos'@'localhost';
 ```
 
 If before quiting you want to check that the user and database was created
 
 ```
-SELECT User FROM mysql.user;
+> SELECT User FROM mysql.user;
 ```
 Should display list of users, one of which should be named "dos"
 
 ```
-SHOW DATABASES;
+> SHOW DATABASES;
 ```
 Should display list of databases, one of which should be named "dos"
 
 ```
-USE dos;
-SHOW tables;
+> USE dos;
+> SHOW tables;
+Empty set (0.00 sec)
 ```
-Should display `Empty set (0.00 sec)`
 
 ### KeyCloak Set Up
 
@@ -65,7 +65,7 @@ Should display `Empty set (0.00 sec)`
 
 Run standalone server on **port 8180**
 ```
-./standalone.sh -Djboss.socket.binding.port-offset=100
+$ ./standalone.sh -Djboss.socket.binding.port-offset=100
 ```
 
 Keycloak Config:
@@ -83,6 +83,7 @@ Keycloak Config:
 First, make sure you are running Java 1.8
 ```
 $ javac -version
+javac 1.8.x
 ```
 
 To run the unit tests
@@ -90,11 +91,8 @@ To run the unit tests
 
 $ mvn test
 
-```
+...
 
-At the end should display
-
-```
 Results :
 
 Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
