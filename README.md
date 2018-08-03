@@ -11,6 +11,8 @@ This project was developed as part of Google Summer of Code 2018.
   * [KeyCloak Set Up](#keycloak-set-up)
   * [Unit Tests](#unit-tests)
 * [To Use](#to-use)
+  * [Environment Variables](#environment-variables)
+* [Applications of the DOS Server](applications-of-the-dos-server)
 
 ## Dependency Checklist
 
@@ -61,14 +63,14 @@ Empty set (0.00 sec)
 
 ### KeyCloak Set Up
 
-**Note**: KeyCloak has not yet been fully integrated.
+Download KeyCloak 4.0.0 [here](https://www.keycloak.org/archive/downloads-4.0.0.html).
 
 Run standalone server on **port 8180**
 ```
 $ ./standalone.sh -Djboss.socket.binding.port-offset=100
 ```
 
-Keycloak Config:
+**Keycloak Config:**
 * Create a **Realm** called "DNAstack"
 * Create a **Client** called "dos-server-app"
 * Under **Client** change "Valid Redirect URIs" to "*"
@@ -113,7 +115,7 @@ The DOS Server should be running on http://localhost:8080/
 
 For details on the api topology and how to use to DOS Server, refer to the [GA4GH swaggerhub specification](https://ga4gh.github.io/data-object-service-schemas/#/).
 
-### Evironment Variabels
+### Environment Variables
 
 Using the `-D` tag, the dos server allows you to specify a number of environment variables. The list of which is below with their defauls:
 
@@ -132,3 +134,13 @@ Below is an example of how to run the dos server with the environment variables 
 $ mvn clean spring-boot:run -Dcontext.path=/user1 -Dserver.port=9090
 
 ```
+
+This allows for custom configurations of the dos server.
+
+
+## Applications of the DOS Server
+
+I have created 2 applications that use this implementaiton of a Dos Server.
+
+1. [PGP Wrapper](https://github.com/ekeilty17/DOS-Server-PGP-Wrapper) loads data from [PGP Canada](https://personalgenomes.ca/data) into a DOS Server database.
+2. [GCP Wrapper](https://github.com/ekeilty17/DOS-Server-GCP-Wrapper) loads data from a public [GCP Bucket](https://cloud.google.com/storage/docs/json_api/v1/buckets) into a DOS Server database.
