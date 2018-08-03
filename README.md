@@ -2,6 +2,8 @@
 
 Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit alliance formed to accelerate the potential of research and medicine to advance human health. They have developed the Data Object Service (DOS), which is an emerging standard for specifying location of data across different cloud environments. This is an implementation of a DOS Server, which hosts and allows the discovery of data objects. The GA4GH specification of the DOS Server API is found [here](https://ga4gh.github.io/data-object-service-schemas/#/).
 
+This project was developed as part of Google Summer of Code 2018.
+
 ## Table of Contents
 * [Dependency Checklist](#dependency-checklist)
 * [Set Up](#set-up)
@@ -12,13 +14,13 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
 
 ## Dependency Checklist
 
-* Using Springboot 1.5.15.
-* Java 1.8. Will not work with Java 10.
-* MYSQL 5.7. Will not work with MYSQL 8.
+* Springboot 1.5.15.
+* Java 1.8. (Will not work with Java 10)
+* MYSQL 5.7. (Will not work with MYSQL 8)
 * Keycloak 4.0.0.
 * DOS Server running on localhost:8080.
 * MYSQL running on localhost:3306.
-* Keycloak running on localhost:8081.
+* Keycloak standalone server running on localhost:8180.
 
 ## Set Up
 
@@ -36,7 +38,7 @@ Go into root user account in MYSQL `$ mysql -u root -p`, enter root user passwor
 ```
 CREATE USER 'dos'@'localhost' IDENTIFIED BY 'dos';
 CREATE DATABASE dos;
-GRANT ALL PRIVILEGES ON dos . * TO 'dos'@'localhost';
+GRANT ALL PRIVILEGES ON dos.* TO 'dos'@'localhost';
 ```
 
 If before quiting you want to check that the user and database was created
@@ -66,7 +68,7 @@ Run standalone server on **port 8180**
 ./standalone.sh -Djboss.socket.binding.port-offset=100
 ```
 
-My Keycloak set up
+Keycloak Config:
 * Create a **Realm** called "DNAstack"
 * Create a **Client** called "dos-server-app"
 * Under **Client** change "Valid Redirect URIs" to "*"
@@ -115,18 +117,20 @@ For details on the api topology and how to use to DOS Server, refer to the [GA4G
 
 ### Evironment Variabels
 
-One can specify the base url of the server using this command
+Using the `-D` tag, the dos server allows you to specify a number of environment variables. The list of which is below with their defauls:
+
+```
+-Dcontext.path=/
+-Dserver.port=8080
+-Ddb.database=dos
+-Ddb.username=dos
+-Ddb.password=dos
+```
+
+Below is an example of how to run the dos server with the environment variables specified
 
 ```
 
-$ mvn clean spring-boot:run -Dcontext.path=/user1
-
-```
-
-One can also specify the port of the server using this command
-
-```
-
-$ mvn clean spring-boot:run -Dserver.port=9090
+$ mvn clean spring-boot:run -Dcontext.path=/user1 -Dserver.port=9090
 
 ```
