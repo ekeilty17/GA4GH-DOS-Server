@@ -81,6 +81,8 @@ $ ./standalone.sh -Djboss.socket.binding.port-offset=100
 
 ### Turn off KeyCloak Authentication
 
+This is not recommended if the DOS Server is being used for commercial purposes, but for demonstration purposes or further development it might be more convient to simply turn off the authentication. This is how one would do so.
+
 Go into the file `src/main/java/com/dnastack/dos/server/config/SecurityConfig.java`.
 
 Change
