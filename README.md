@@ -89,14 +89,13 @@ Change
     protected void configure(HttpSecurity http) throws Exception {
             super.configure(http);
 
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    //.antMatchers("/noneSecurity").hasRole("admin")
-                    .antMatchers("/databundles/**").hasAnyRole("admin","user")
-                    .antMatchers("/dataobjects/**").hasRole("admin")
-                    .anyRequest()
-                    .permitAll();
+            http.csrf().disable()
+                .authorizeRequests()
+                //.antMatchers("/noneSecurity").hasRole("admin")
+                .antMatchers("/databundles/**").hasAnyRole("admin","user")
+                .antMatchers("/dataobjects/**").hasRole("admin")
+                .anyRequest()
+                .permitAll();
 
     } 
 ```
@@ -106,14 +105,13 @@ to
     protected void configure(HttpSecurity http) throws Exception {
             super.configure(http);
 
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers("/noneSecurity").hasRole("admin")
-                    //.antMatchers("/databundles/**").hasAnyRole("admin","user")
-                    //.antMatchers("/dataobjects/**").hasRole("admin")
-                    .anyRequest()
-                    .permitAll();
+            http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/noneSecurity").hasRole("admin")
+                //.antMatchers("/databundles/**").hasAnyRole("admin","user")
+                //.antMatchers("/dataobjects/**").hasRole("admin")
+                .anyRequest()
+                .permitAll();
 
     }
 ```
