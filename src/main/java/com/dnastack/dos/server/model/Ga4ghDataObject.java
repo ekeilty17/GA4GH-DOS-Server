@@ -51,10 +51,7 @@ public class Ga4ghDataObject {
 	//@NotNull
 	@Valid
 	private List<Checksum> checksums = new ArrayList<Checksum>();
-
-	// TODO look into "join table for mapping collections if you want Cascade
-	// collection"
-	// FIXME urls must have a unique id, which means can't have duplicate urls
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Valid
 	private List<Ga4ghURL> urls = new ArrayList<Ga4ghURL>();

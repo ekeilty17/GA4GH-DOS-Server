@@ -25,10 +25,6 @@ import java.util.Map;
 @EqualsAndHashCode(exclude = { "checksums" })
 public class Ga4ghDataBundle {
 
-	// TODO look into "@JsonView" for dealing with different permissions per element
-	// in data
-	// or use a DTO layer...probably better
-
 	@Id
 	@NotNull
 	private String versionId;
@@ -42,14 +38,12 @@ public class Ga4ghDataBundle {
 	@ElementCollection
 	@NotNull
 	private List<String> data_object_ids = new ArrayList<String>();
-	// TODO possibly change all lists to sets...not sure yet
 
 	@NotNull
 	private String created;
 	@NotNull
 	private String updated;
 
-	// FIXME "always use OptimisticLock for avoid concurrent data changing"
 	@NotNull
 	private String version;
 
@@ -66,12 +60,11 @@ public class Ga4ghDataBundle {
 	@ElementCollection
 	private List<String> aliases = new ArrayList<String>();
 
-	// WISH Should be able to handle objects
+	// WISH Should be able to handle objects, but since java is strictly typed,
+	//		serializing them might be the best we can do
 	@ElementCollection
 	@MapKeyColumn(name = "system_metadata_key")
 	@Column(name = "system_metadata_value")
-	// @CollectionTable(name="example_attributes",
-	// joinColumns=@JoinColumn(name="example_id"))
 	@NotNull
 	private Map<String, String> system_metadata = new HashMap<String, String>();
 

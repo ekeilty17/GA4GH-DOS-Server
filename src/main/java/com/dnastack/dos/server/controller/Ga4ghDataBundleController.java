@@ -13,8 +13,6 @@ import com.dnastack.dos.server.response.UpdateDataBundleResponse;
 import com.dnastack.dos.server.service.Ga4ghDataBundleService;
 
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +32,6 @@ import java.util.List;
 
 @RestController
 public class Ga4ghDataBundleController {
-
-	// temporary
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private Ga4ghDataBundleService ga4ghDataBundleService;

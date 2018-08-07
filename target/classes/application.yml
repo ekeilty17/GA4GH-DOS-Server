@@ -5,7 +5,6 @@ server:
   
 spring:
   datasource:
-    # TODO add SSL connection
     url: jdbc:mysql://localhost:3306/${db.database:dos}?useSSL=false
     username: ${db.username:dos}
     password: ${db.password:dos}
@@ -23,12 +22,6 @@ keycloak:
   realm: DNAstack
   resource: dos-server-app
   public-client: true
-  #enable-basic-auth: false # basic auth is default true, we dont want that
-  # TODO figure out kwhat these do
-  #public-client: false
-  #bearer-only: true
-  #cors: true
-  #use-resource-role-mappings: false
 
 logging:
   level:
