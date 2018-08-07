@@ -50,7 +50,7 @@ public class Ga4ghDataBundle {
 	@Singular
 	@ElementCollection
 	@Embedded
-	//@NotNull
+	// @NotNull
 	@Valid
 	private List<Checksum> checksums = new ArrayList<Checksum>();
 
@@ -61,7 +61,7 @@ public class Ga4ghDataBundle {
 	private List<String> aliases = new ArrayList<String>();
 
 	// WISH Should be able to handle objects, but since java is strictly typed,
-	//		serializing them might be the best we can do
+	// serializing them might be the best we can do
 	@ElementCollection
 	@MapKeyColumn(name = "system_metadata_key")
 	@Column(name = "system_metadata_value")
@@ -149,8 +149,8 @@ public class Ga4ghDataBundle {
 		this.checksums = new ArrayList<Checksum>(dataBundle.getChecksums());
 		this.description = dataBundle.getDescription();
 		this.aliases = new ArrayList<String>(dataBundle.getAliases());
-		this.system_metadata = new HashMap<String,String>(dataBundle.getSystem_metadata());
-		this.user_metadata = new HashMap<String,String>(dataBundle.getUser_metadata());
+		this.system_metadata = new HashMap<String, String>(dataBundle.getSystem_metadata());
+		this.user_metadata = new HashMap<String, String>(dataBundle.getUser_metadata());
 	}
 
 }

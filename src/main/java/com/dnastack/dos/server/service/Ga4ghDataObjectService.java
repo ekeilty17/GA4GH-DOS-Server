@@ -189,7 +189,7 @@ public class Ga4ghDataObjectService {
 			// Deleting objects with old id
 			deleteObject(data_object_id);
 		}
-		
+
 		// Updating 'highest' variable
 		Ga4ghDataObject ga4ghHighest = ga4ghDataObjectRepository.findByIdAndHighest(object.getId(), true);
 
@@ -199,7 +199,7 @@ public class Ga4ghDataObjectService {
 		} else {
 			object.setHighest(false);
 		}
-		
+
 		// Updating previously (and possibly still currently) highest version object
 		ga4ghDataObjectRepository.save(ga4ghHighest);
 

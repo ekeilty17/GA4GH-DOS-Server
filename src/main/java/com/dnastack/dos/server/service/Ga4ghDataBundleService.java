@@ -29,13 +29,13 @@ public class Ga4ghDataBundleService {
 		int start = pageable.getOffset();
 		int end = (start + pageable.getPageSize()) > objectList.size() ? objectList.size()
 				: (start + pageable.getPageSize());
-		
+
 		if (!(objectList.isEmpty() && pageable.getPageNumber() == 0)) {
 			if (start >= end) {
 				throw new InvalidParameterException("Page does not exist, page number is too large.");
 			}
 		}
-		
+
 		return new PageImpl<DataBundle>(objectList.subList(start, end),
 				new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
 				objectList.size());
@@ -158,7 +158,8 @@ public class Ga4ghDataBundleService {
 
 	// PUT
 	public void updateObject(String data_bundle_id, Ga4ghDataBundle object) throws EntityNotFoundException, Exception {
-		// TODO can turn findByIdEquals into a boolean function, might make things cleaner
+		// TODO can turn findByIdEquals into a boolean function, might make things
+		// cleaner
 		List<Ga4ghDataBundle> objects_DataBundleId = ga4ghDataBundleRepository.findByIdEquals(data_bundle_id);
 		if (objects_DataBundleId.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataBundle.class, "data_bundle_id", data_bundle_id);
@@ -172,15 +173,16 @@ public class Ga4ghDataBundleService {
 			}
 
 			// Updating id of all versions of the data bundle
-			objects_DataBundleId.forEach(o -> ga4ghDataBundleRepository.save(new Ga4ghDataBundle(o.isHighest(), object.getId(),
-					new ArrayList<>(o.getData_object_ids()), o.getCreated(), o.getUpdated(), o.getVersion(),
-					new ArrayList<>(o.getChecksums()), o.getDescription(), new ArrayList<>(o.getAliases()),
-					new HashMap<>(o.getSystem_metadata()), new HashMap<>(o.getUser_metadata()))));
-			
+			objects_DataBundleId
+					.forEach(o -> ga4ghDataBundleRepository.save(new Ga4ghDataBundle(o.isHighest(), object.getId(),
+							new ArrayList<>(o.getData_object_ids()), o.getCreated(), o.getUpdated(), o.getVersion(),
+							new ArrayList<>(o.getChecksums()), o.getDescription(), new ArrayList<>(o.getAliases()),
+							new HashMap<>(o.getSystem_metadata()), new HashMap<>(o.getUser_metadata()))));
+
 			// Deleting objects with old id
 			deleteObject(data_bundle_id);
 		}
-		
+
 		// Updating 'highest' variable
 		Ga4ghDataBundle ga4ghHighest = ga4ghDataBundleRepository.findByIdAndHighest(object.getId(), true);
 
@@ -190,7 +192,7 @@ public class Ga4ghDataBundleService {
 		} else {
 			object.setHighest(false);
 		}
-		
+
 		// Updating previously (and possibly still currently) highest version object
 		ga4ghDataBundleRepository.save(ga4ghHighest);
 

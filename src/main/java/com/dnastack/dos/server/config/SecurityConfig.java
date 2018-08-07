@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)	// TODO figure out what this does
+@EnableGlobalMethodSecurity(prePostEnabled = true) // TODO figure out what this does
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
@@ -47,15 +47,13 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
-		
-		http
-			.csrf().disable()
+
+		http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/noneSecurity").hasRole("admin")
-			//.antMatchers("/databundles/**").hasAnyRole("admin","user")
-			//.antMatchers("/dataobjects/**").hasRole("admin")
-			.anyRequest()
-			.permitAll();
-		
+			//.antMatchers("/noneSecurity").hasRole("admin")
+			.antMatchers("/databundles/**").hasAnyRole("admin","user")
+			.antMatchers("/dataobjects/**").hasRole("admin")
+			.anyRequest().permitAll();
+
 	}
 }

@@ -48,10 +48,10 @@ public class Ga4ghDataObject {
 	@Singular
 	@ElementCollection
 	@Embedded
-	//@NotNull
+	// @NotNull
 	@Valid
 	private List<Checksum> checksums = new ArrayList<Checksum>();
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Valid
 	private List<Ga4ghURL> urls = new ArrayList<Ga4ghURL>();
