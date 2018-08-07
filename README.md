@@ -2,15 +2,14 @@
 
 Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit alliance formed to accelerate the potential of research and medicine to advance human health. They have developed the Data Object Service (DOS), which is an emerging standard for specifying location of data across different cloud environments. This is an implementation of a DOS Server, which hosts and allows the discovery of data objects. The GA4GH specification of the DOS Server API is found [here](https://ga4gh.github.io/data-object-service-schemas/#/).
 
-This project was developed as part of [Google Summer of Code 2018](https://summerofcode.withgoogle.com/).
-
 ## Table of Contents
 * [Dependency Checklist](#dependency-checklist)
 * [Set Up](#set-up)
   * [MYSQL Set Up](#mysql-set-up)
   * [KeyCloak Set Up](#keycloak-set-up)
+  * [Turn off KeyCloack Authentication](#turn-off-keycloak-authentication)
   * [Unit Tests](#unit-tests)
-* [To Use](#to-use)
+* [Usage](#usage)
   * [Environment Variables](#environment-variables)
 * [Applications of the DOS Server](applications-of-the-dos-server)
 
@@ -70,7 +69,7 @@ Run standalone server on **port 8180**
 $ ./standalone.sh -Djboss.socket.binding.port-offset=100
 ```
 
-**Keycloak Config:**
+**KeyCloak Config:**
 * Create a **Realm** called "DNAstack"
 * Create a **Client** called "dos-server-app"
 * Under **Client** change "Valid Redirect URIs" to "*"
@@ -78,6 +77,45 @@ $ ./standalone.sh -Djboss.socket.binding.port-offset=100
 * Create a **Users** called "testuser" with password "testuser" and assign to the **Role** "user"
 * Create a **Role** called "admin"
 * Create a **Users** called "adminuser" with password "adminuser" and assign to the **Role** "admin"
+
+### Turn off KeyCloak Authentication
+
+Go into the file `src/main/java/com/dnastack/dos/server/config/SecurityConfig.java`.
+
+Change
+```java
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+            super.configure(http);
+
+            http
+                    .csrf().disable()
+                    .authorizeRequests()
+                    //.antMatchers("/noneSecurity").hasRole("admin")
+                    .antMatchers("/databundles/**").hasAnyRole("admin","user")
+                    .antMatchers("/dataobjects/**").hasRole("admin")
+                    .anyRequest()
+                    .permitAll();
+
+    } 
+```
+to
+```java
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+            super.configure(http);
+
+            http
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/noneSecurity").hasRole("admin")
+                    //.antMatchers("/databundles/**").hasAnyRole("admin","user")
+                    //.antMatchers("/dataobjects/**").hasRole("admin")
+                    .anyRequest()
+                    .permitAll();
+
+    }
+```
 
 
 ### Unit Tests
@@ -100,7 +138,7 @@ Results :
 Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
 ```
 
-## To Use
+## Usage
 
 Once the above has been completed, simply execute:
 
@@ -136,7 +174,6 @@ $ mvn clean spring-boot:run -Dcontext.path=/user1 -Dserver.port=9090
 ```
 
 This allows for custom configurations of the dos server.
-
 
 ## Applications of the DOS Server
 
