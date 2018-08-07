@@ -10,6 +10,7 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
   * [Turn off KeyCloack Authentication](#turn-off-keycloak-authentication)
   * [Unit Tests](#unit-tests)
 * [Usage](#usage)
+  * [Command Line](#command-line)
   * [Environment Variables](#environment-variables)
 * [Applications of the DOS Server](applications-of-the-dos-server)
 
@@ -140,6 +141,7 @@ Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
 
 ## Usage
 
+### Command Line
 Once the above has been completed, simply execute:
 
 ```
