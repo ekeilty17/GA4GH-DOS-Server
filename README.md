@@ -20,9 +20,9 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
 * Java 1.8. (Will not work with Java 10)
 * MYSQL 5.7. (Will not work with MYSQL 8)
 * Keycloak 4.0.0.
-* DOS Server running on localhost:8080.
-* MYSQL running on localhost:3306.
-* Keycloak standalone server running on localhost:8180.
+* DOS Server running on http://localhost:8080/.
+* MYSQL running on http://localhost:3306/.
+* Keycloak standalone server running on http://localhost:8180/.
 
 ## Set Up
 
