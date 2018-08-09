@@ -95,7 +95,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(org.hibernate.exception.ConstraintViolationException.class)
 	protected ResponseEntity<Object> multipleUrlException(RuntimeException ex, WebRequest request) {
 		ErrorResponse errorResponse = new ErrorResponse(
-				ex.getMessage() + ". Most likely, two data objects contain the same url.", BAD_REQUEST.value(), ex);
+				ex.getMessage() + ". Most likely two data objects contain the same url.", BAD_REQUEST.value(), ex);
 		return buildResponseEntity(errorResponse);
 	}
 
@@ -108,7 +108,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(errorResponse);
 	}
 
-	// Error response builder
+	/**
+	 * Error response builder
+	 */
 	private ResponseEntity<Object> buildResponseEntity(ErrorResponse errorResponse) {
 		return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(errorResponse.getStatus()));
 	}

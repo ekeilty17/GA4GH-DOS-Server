@@ -16,6 +16,8 @@ public class ListDataBundlesResponse {
 	private List<DataBundle> data_bundles;
 	private String next_page_token;
 
+	// Custom Constructors
+	
 	public ListDataBundlesResponse() {
 
 	}

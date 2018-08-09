@@ -58,6 +58,7 @@ public class Ga4ghDataObjectController {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
 
+		// Search by alias
 		if (alias != null) {
 			try {
 				ga4ghDataObjectService.getObjectsByAliasWithHighestVersion(alias, pageable.next());
@@ -69,7 +70,8 @@ public class Ga4ghDataObjectController {
 						ga4ghDataObjectService.getObjectsByAliasWithHighestVersion(alias, pageable), "0");
 			}
 		}
-
+		
+		// Test if pageable.next() exists
 		try {
 			ga4ghDataObjectService.getAllObjectsWithHighestVersions(pageable.next());
 			return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsWithHighestVersions(pageable),
@@ -119,10 +121,10 @@ public class Ga4ghDataObjectController {
 		// Handling DateTime Exception
 		DateTime D1 = new DateTime(object.getData_object().getCreated());
 		DateTime D2 = new DateTime(object.getData_object().getUpdated());
+		
 		if (!data_object_id.equals(object.getData_object_id())) {
 			throw new Exception("Conflicting data_object_id's in url and request body.");
 		}
-
 		ga4ghDataObjectService.updateObject(data_object_id, new Ga4ghDataObject(object.getData_object()));
 		return new UpdateDataObjectResponse(object.getData_object().getId());
 	}
@@ -135,32 +137,33 @@ public class Ga4ghDataObjectController {
 		return new DeleteDataObjectResponse(data_object_id);
 	}
 
-	// TEMPORARY METHODS - for debugging purposes
-
-	// GET Request - temporary
+	// DEVELOPER METHODS - helpful for debugging
+	/*
+	// GET Request - KeyCloak authentication test
 	@RequestMapping("/dataobjects/auth")
 	public String Test() {
 		return "If you are seeing this, then you have been authenticated.";
 	}
 
-	// GET Request - temporary - gets all data objects and all their versions
+	// GET Request - gets all data objects and all their versions
 	@RequestMapping("/dataobjects/allVersions")
 	public ListDataObjectsResponse getAllDataBundlesAndAllVersions(
 			@PageableDefault(value = 10, page = 0) Pageable pageable) throws Exception {
 		return new ListDataObjectsResponse(ga4ghDataObjectService.getAllObjectsAndAllVersions(pageable));
 	}
 
-	// GET Request - temporary - gets all data objects and all their versions as
+	// GET Request - gets all data objects and all their versions as
 	// they are represented in the database
 	@RequestMapping("/dataobjects/allVersions/raw")
 	public List<Ga4ghDataObject> getAllDataBundlesAndAllVersionsRaw() {
 		return ga4ghDataObjectService.getAllObjectsAndAllVersionsRaw();
 	}
 
-	// DELETE Request - temporary - deletes all data objects
+	// DELETE Request - deletes all data objects
 	@RequestMapping(value = "/dataobjects/all", method = RequestMethod.DELETE)
 	public String deleteDataObjectById() {
 		ga4ghDataObjectService.deleteAllObjects();
 		return "All Data Objects deleted.";
 	}
+	*/
 }

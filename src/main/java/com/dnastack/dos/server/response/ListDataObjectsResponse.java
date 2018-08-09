@@ -16,6 +16,8 @@ public class ListDataObjectsResponse {
 	private List<DataObject> data_objects;
 	private String next_page_token;
 
+	// Custom Constructors
+	
 	public ListDataObjectsResponse() {
 
 	}

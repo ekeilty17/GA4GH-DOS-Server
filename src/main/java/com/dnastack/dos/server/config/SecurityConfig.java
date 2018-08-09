@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true) // TODO figure out what this does
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
@@ -26,7 +26,6 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	// Submits the KeycloakAuthenticationProvider to the AuthenticationManager
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
 		KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
 		keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
 		auth.authenticationProvider(keycloakAuthenticationProvider);

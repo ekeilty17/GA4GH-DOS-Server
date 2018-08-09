@@ -60,8 +60,7 @@ public class Ga4ghDataBundle {
 	@ElementCollection
 	private List<String> aliases = new ArrayList<String>();
 
-	// WISH Should be able to handle objects, but since java is strictly typed,
-	// serializing them might be the best we can do
+	// TODO change to Map<Stirng, ?>
 	@ElementCollection
 	@MapKeyColumn(name = "system_metadata_key")
 	@Column(name = "system_metadata_value")

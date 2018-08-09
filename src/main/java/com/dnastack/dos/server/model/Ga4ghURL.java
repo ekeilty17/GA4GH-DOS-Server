@@ -29,17 +29,18 @@ public class Ga4ghURL {
 	@NotNull
 	private String url;
 
+	// TODO change to Map<String, ?>
 	@ElementCollection
 	@MapKeyColumn(name = "system_metadata_key")
 	@Column(name = "system_metadata_value")
 	@NotNull
-	private Map<String, String> system_metadata = new HashMap<>();
+	private Map<String, String> system_metadata = new HashMap<String, String>();
 
 	@ElementCollection
 	@MapKeyColumn(name = "user_metadata_key")
 	@Column(name = "user_metadata_value")
 	@NotNull
-	private Map<String, String> user_metadata = new HashMap<>();
+	private Map<String, String> user_metadata = new HashMap<String, String>();
 
 	// Custom Constructors
 

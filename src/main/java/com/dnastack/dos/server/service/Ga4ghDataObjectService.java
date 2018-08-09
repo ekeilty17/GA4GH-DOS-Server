@@ -46,11 +46,12 @@ public class Ga4ghDataObjectService {
 				objectList.size());
 	}
 
-	// Helper - compare version Strings of the form x.x.x
+	// Helper - checks if String is of the form x.x.x
 	public boolean isVersionCorrectForm(String v) {
 		return v.matches("\\d+|\\d+(\\.\\d+)|\\d+(\\.\\d+(\\.\\d+))");
 	}
 
+	// Helper - compare version Strings of the form x.x.x
 	public boolean isFirstVersionGreaterOrEqual(String v1, String v2) throws InvalidParameterException {
 
 		if (!isVersionCorrectForm(v1) || !isVersionCorrectForm(v2)) {
@@ -73,7 +74,10 @@ public class Ga4ghDataObjectService {
 		return true;
 	}
 
-	// GET Specific Object
+	/*
+	 *  GET Specific Object
+	 */
+	
 	public Ga4ghDataObject getObjectByIdAndVersion(String id, String version) throws EntityNotFoundException {
 		Ga4ghDataObject ga4gh = ga4ghDataObjectRepository.findByIdAndVersion(id, version);
 		if (ga4gh == null) {
@@ -95,7 +99,10 @@ public class Ga4ghDataObjectService {
 		return objects.get(0);
 	}
 
-	// GET List of Objects by some criteria
+	/*
+	 *  GET List of Objects by some criteria
+	 */
+	
 	public Page<DataObject> getObjectByIdAndAllVersions(String id, Pageable pageable)
 			throws EntityNotFoundException, Exception {
 		List<DataObject> objects = new ArrayList<>();
@@ -148,7 +155,10 @@ public class Ga4ghDataObjectService {
 		return paginateList(objects, pageable);
 	}
 
-	// POST
+	/*
+	 *  POST
+	 */
+	
 	public void addObject(Ga4ghDataObject object) throws Exception {
 		List<Ga4ghDataObject> ga4ghList = ga4ghDataObjectRepository.findByIdEquals(object.getId());
 		if (!ga4ghList.isEmpty()) {
@@ -161,15 +171,20 @@ public class Ga4ghDataObjectService {
 		ga4ghDataObjectRepository.save(object);
 	}
 
-	// PUT
+	/*
+	 *  PUT
+	 */
+	
 	public void updateObject(String data_object_id, Ga4ghDataObject object) throws EntityNotFoundException, Exception {
 		List<Ga4ghDataObject> objects_DataObjectId = ga4ghDataObjectRepository.findByIdEquals(data_object_id);
+		// Throw Exception if data bundle DNE
 		if (objects_DataObjectId.isEmpty()) {
 			throw new EntityNotFoundException(Ga4ghDataObject.class, "data_object_id", data_object_id);
 		}
 
 		if (!data_object_id.equals(object.getId())) {
 			List<Ga4ghDataObject> objects_Id = ga4ghDataObjectRepository.findByIdEquals(object.getId());
+			// Throw Exception if changing the data bundle id would conflict with another data bundle
 			if (!objects_Id.isEmpty()) {
 				throw new Exception(
 						"Data Object with that id already exists in the database. Overriding this Data Object's id would conflict with the id of another Data Object.");
@@ -207,7 +222,10 @@ public class Ga4ghDataObjectService {
 		ga4ghDataObjectRepository.save(object);
 	}
 
-	// DELETE
+	/*
+	 *  DELETE
+	 */
+	
 	public void deleteAllObjects() {
 		ga4ghDataObjectRepository.deleteAll();
 		ga4ghURLRepository.deleteAll();

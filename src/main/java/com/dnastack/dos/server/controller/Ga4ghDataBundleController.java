@@ -58,7 +58,8 @@ public class Ga4ghDataBundleController {
 		if (page_size != null) {
 			pageable = new PageRequest(pageable.getPageNumber(), page_size);
 		}
-
+		
+		// Search by alias
 		if (alias != null) {
 			try {
 				ga4ghDataBundleService.getObjectsByAliasWithHighestVersion(alias, pageable.next());
@@ -70,7 +71,8 @@ public class Ga4ghDataBundleController {
 						ga4ghDataBundleService.getObjectsByAliasWithHighestVersion(alias, pageable), "0");
 			}
 		}
-
+		
+		// Test if pageable.next() exists
 		try {
 			ga4ghDataBundleService.getAllObjectsWithHighestVersions(pageable.next());
 			return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsWithHighestVersions(pageable),
@@ -137,33 +139,33 @@ public class Ga4ghDataBundleController {
 		return new DeleteDataBundleResponse(data_bundle_id);
 	}
 
-	// TEMPORARY METHODS - for debugging purposes
-
-	// GET Request - temporary
+	// DEVELOPER METHODS - helpful for debugging
+	/*
+	// GET Request - KeyCloak authentication test
 	@RequestMapping("/databundles/auth")
 	public String Test() {
 		return "If you are seeing this, then you have been authenticated.";
 	}
 
-	// GET Request - temporary - gets all data objects and all their versions
+	// GET Request - gets all data objects and all their versions
 	@RequestMapping("/databundles/allVersions")
 	public ListDataBundlesResponse getAllDataBundlesAndAllVersions(
 			@PageableDefault(value = 10, page = 0) Pageable pageable) throws Exception {
 		return new ListDataBundlesResponse(ga4ghDataBundleService.getAllObjectsAndAllVersions(pageable));
 	}
 
-	// GET Request - temporary - gets all data objects and all their versions as
+	// GET Request - gets all data objects and all their versions as
 	// they are represented in the database
 	@RequestMapping("/databundles/allVersions/raw")
 	public List<Ga4ghDataBundle> getAllDataBundlesAndAllVersionsRaw() {
 		return ga4ghDataBundleService.getAllObjectsAndAllVersionsRaw();
 	}
 
-	// DELETE Request - temporary - deletes all data bundles in the database
+	// DELETE Request - deletes all data bundles in the database
 	@RequestMapping(value = "/databundles/all", method = RequestMethod.DELETE)
 	public String deleteAllDataBundles() {
 		ga4ghDataBundleService.deleteAllObjects();
 		return "All Data Bundles deleted.";
 	}
-
+	*/
 }

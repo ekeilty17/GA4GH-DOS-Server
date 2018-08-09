@@ -14,8 +14,8 @@ public class UpdateDataBundleRequest {
 
 	@NotNull
 	private String data_bundle_id;
-	@NotNull
 	@Valid
+	@NotNull
 	private DataBundle data_bundle;
 
 }

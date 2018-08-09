@@ -13,7 +13,7 @@ import java.util.Map;
 public class DataBundle {
 
 	private String id;
-	private List<String> data_object_ids;
+	private List<String> data_object_ids = new ArrayList<String>();
 	private String created;
 	private String updated;
 	private String version;

@@ -8,6 +8,8 @@ public class ErrorResponse {
 	private String msg;
 	private int status;
 
+	// Custom Constructors
+	
 	public ErrorResponse(int status) {
 		this();
 		this.status = status;
