@@ -20,9 +20,9 @@ Global Alliance for Genomics and Health (GA4GH) is an international, nonprofit a
 * Java 1.8. (Will not work with Java 10)
 * MYSQL 5.7. (Will not work with MYSQL 8)
 * Keycloak 4.0.0.
-* DOS Server running on localhost:8080.
-* MYSQL running on localhost:3306.
-* Keycloak standalone server running on localhost:8180.
+* DOS Server running on http://localhost:8080/.
+* MYSQL running on http://localhost:3306/.
+* Keycloak standalone server running on http://localhost:8180/.
 
 ## Set Up
 
@@ -80,6 +80,8 @@ $ ./standalone.sh -Djboss.socket.binding.port-offset=100
 * Create a **Users** called "adminuser" with password "adminuser" and assign to the **Role** "admin"
 
 ### Turn off KeyCloak Authentication
+
+This is not recommended if the DOS Server is being used for commercial purposes, but for demonstration purposes or further development it might be more convient to simply turn off the authentication. This is how one would do so.
 
 Go into the file `src/main/java/com/dnastack/dos/server/config/SecurityConfig.java`.
 
